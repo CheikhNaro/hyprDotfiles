@@ -14,7 +14,7 @@
 
 ---
 
-## 🧩 Stack used
+## 🧩 Dependancies
 
 | Role | Tool |
 |---|---|
@@ -195,7 +195,7 @@ systemctl --user enable --now clipse.service
 systemctl --user enable --now dwindle-clockwise.service
 ```
 
-### 9. 🎨 Theming : First launch of Matugen
+### 9. Theming : First launch of Matugen
 
 This setup uses **Matugen** to automatically generate a cohesive color palette from the wallpaper. The templates are located in `.config/matugen/templates/` and apply the generated colors to your apps.
 
@@ -218,7 +218,7 @@ flatpak --user override --filesystem=/usr/share/icons/:ro
 
 ---
 
-## 🤝 Help Wanted: Hyprpolkitagent Theming
+## Help Wanted: Hyprpolkitagent Theming
 
 I haven't been able to figure out how to properly theme the `hyprpolkitagent` authentication window yet. 
 
