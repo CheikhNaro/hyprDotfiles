@@ -10,7 +10,7 @@
 
 ## 📸 Preview
 
-> *(Add screenshots here)*
+> *(coming soon since my laptop's old)*
 
 ---
 
