@@ -100,7 +100,7 @@ do_record() {
         region)
             local geom
             geom=$(slurp $SLURP_ARGS) || exit 0
-            wf-recorder -g "$geom" -f "$outfile" &
+            wf-recorder --audio -g "$geom" -f "$outfile" &
             echo $! > "$PIDFILE"
             _notify_record "Région sélectionnée"
             ;;
@@ -108,9 +108,9 @@ do_record() {
             local mon
             mon=$(_active_monitor)
             if [ -n "$mon" ] && [ "$mon" != "null" ]; then
-                wf-recorder -o "$mon" -f "$outfile" &
+                wf-recorder --audio -o "$mon" -f "$outfile" &
             else
-                wf-recorder -f "$outfile" &
+                wf-recorder --audio -f "$outfile" &
             fi
             echo $! > "$PIDFILE"
             _notify_record "Plein écran"
@@ -118,7 +118,7 @@ do_record() {
         window)
             local geom
             geom=$(_window_geom)
-            wf-recorder -g "$geom" -f "$outfile" &
+            wf-recorder --audio -g "$geom" -f "$outfile" &
             echo $! > "$PIDFILE"
             _notify_record "Fenêtre active"
             ;;
