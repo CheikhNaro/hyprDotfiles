@@ -1,0 +1,5 @@
+[osd]
+enabled = false
+
+[wallpaper]
+transition-type = "fade"

@@ -1,0 +1,129 @@
+configuration {
+    modi:                       "drun,run,window";
+    show-icons:                 true;
+    icon-theme:                 "Adwaita";
+    display-drun:               " ";
+    drun-display-format:        "{name}";
+    disable-history:            true;
+    hide-scrollbar:             true;
+    font:                       "Ubuntu Medium 15";
+    matching:                   "fuzzy";
+    sort:                       true;
+    sorting-method:             "fzf";
+    drun-match-fields:          "name,generic";
+}
+
+@import "colors.rasi"
+ 
+/* --- Palette de Couleurs (générée par Matugen) --- */
+* {
+    background-color: transparent;
+    text-color:       @fg;
+    margin:           0;
+    padding:          0;
+}
+
+/* --- Fenêtre Principale --- */
+window {
+    transparency:        "real";
+    location:            north;
+    anchor:              north;
+    fullscreen:          false;
+    width:               500px;
+    /* height:              850px; */
+    x-offset:            0px;
+    y-offset:            50px;
+
+    enabled:             true;
+    border:              2px;
+    border-color:        @accent;
+    border-radius:       12px;
+    background-color:    @bg;
+    cursor:              "default";
+}
+
+/* --- Boîte de Contenu --- */
+mainbox {
+    enabled:             true;
+    spacing:             10px;
+    padding:             20px;
+    children:            [ "inputbar", "listview" ];
+}
+
+/* --- Barre de Saisie (Recherche) --- */
+inputbar {
+    enabled:             true;
+    spacing:             10px;
+    padding:             10px;
+    border-radius:       8px;
+    background-color:    @bg-alt;
+    children:            [ "entry" ];
+}
+
+prompt {
+    enabled:             false;
+}
+
+entry {
+    enabled:             true;
+    cursor:              text;
+    text-color:          #ffffff;
+    placeholder:         "Rechercher une application...";
+    placeholder-color:   #7f849c;
+}
+
+separator {
+    enabled:             false;
+}
+
+/* --- Liste des Applications --- */
+listview {
+    enabled:             true;
+    columns:             1;
+    lines:               10;
+    cycle:               true;
+    dynamic:             true;
+    scrollbar:           false;
+    layout:              vertical;
+    reverse:             false;
+    fixed-height:        false;
+    fixed-columns:       true;
+
+    spacing:             5px;
+    background-color:    transparent;
+}
+
+/* --- Éléments de la Liste --- */
+element {
+    enabled:             true;
+    spacing:             10px;
+    padding:             8px;
+    border-radius:       6px;
+    cursor:              pointer;
+}
+
+element normal.normal {
+    background-color:    transparent;
+    text-color:          @fg;
+}
+
+element alternate.normal {
+    background-color:    transparent;
+    text-color:          @fg;
+}
+
+element selected.normal {
+    background-color:    @accent;
+    text-color:          #11111b; /* Texte sombre sur fond clair pour le contraste */
+}
+
+element-icon {
+    size:                45px;
+    cursor:              inherit;
+}
+
+element-text {
+    vertical-align:      0.5;
+    cursor:              inherit;
+    text-color:          inherit;
+}

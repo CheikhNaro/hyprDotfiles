@@ -1,0 +1,12 @@
+require("modules.programs")
+require("modules.env")
+require("modules.monitors")
+require("modules.input")
+require("modules.decoration")
+require("modules.animations")
+require("modules.binds")
+require("modules.window_rules")
+require("modules.autostart")
+require("modules.wallpaper")
+
+pcall(require, "modules.private")

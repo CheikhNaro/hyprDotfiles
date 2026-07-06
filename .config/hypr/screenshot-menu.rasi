@@ -1,0 +1,116 @@
+/**
+ * screenshot-menu.rasi
+ * Layout : panneau d'outils style GNOME Screenshot
+ * Grille 3 colonnes × 2 lignes — icônes Nerd Font au-dessus du texte
+ * Couleurs : palette Matugen via colors.rasi
+ */
+
+@import "~/.config/rofi/colors.rasi"
+
+/* ── Reset global ─────────────────────────────────────────── */
+* {
+    background-color:   transparent;
+    text-color:         @fg;
+    margin:             0px;
+    padding:            0px;
+    border:             0px;
+    font:               "Ubuntu Medium 13";
+}
+
+/* ── Fenêtre : petit panneau flottant centré ──────────────── */
+window {
+    location:           center;
+    anchor:             center;
+    fullscreen:         false;
+    width:              460px;
+
+    background-color:   @bg;
+    border:             1px solid;
+    border-color:       rgba(224,197,109,0.30);
+    border-radius:      22px;
+
+    cursor:             "default";
+    padding:            0px;
+}
+
+/* ── Boîte principale ─────────────────────────────────────── */
+mainbox {
+    orientation:        vertical;
+    spacing:            12px;
+    padding:            20px 18px 20px 18px;
+    background-color:   transparent;
+    children:           [ "message", "listview" ];
+}
+
+/* ── En-tête : titre centré style GNOME ──────────────────── */
+message {
+    background-color:   transparent;
+    padding:            0px 0px 4px 0px;
+}
+
+textbox {
+    background-color:   transparent;
+    text-color:         @fg;
+    font:               "Ubuntu Medium 12";
+    horizontal-align:   0.5;
+    markup:             true;
+}
+
+/* ── Grille 3 × 2 ────────────────────────────────────────── */
+listview {
+    columns:            3;
+    lines:              2;
+    cycle:              true;
+    dynamic:            false;
+    scrollbar:          false;
+    reverse:            false;
+    fixed-height:       true;
+    fixed-columns:      true;
+    spacing:            9px;
+    background-color:   transparent;
+}
+
+/* ── Carte (état normal) ─────────────────────────────────── */
+element {
+    cursor:             pointer;
+    border-radius:      14px;
+    padding:            18px 6px 14px 6px;
+    spacing:            0px;
+    orientation:        vertical;
+    background-color:   @bg-alt;
+    text-color:         @fg;
+}
+
+element normal.normal,
+element alternate.normal {
+    background-color:   @bg-alt;
+    text-color:         @fg;
+    border:             1px solid;
+    border-color:       rgba(255,255,255,0.06);
+}
+
+/* ── Carte sélectionnée : bordure accent, fond légèrement plus clair ── */
+element selected.normal {
+    background-color:   rgba(224,197,109,0.12);
+    text-color:         @accent;
+    border:             2px solid;
+    border-color:       @accent;
+    border-radius:      14px;
+}
+
+/* ── Texte de chaque carte (icône \n label) ──────────────── */
+element-text {
+    horizontal-align:   0.5;
+    vertical-align:     0.5;
+    markup:             true;
+    text-color:         inherit;
+    background-color:   transparent;
+    /* La police de base est écrasée par le markup Pango dans le script */
+    font:               "Ubuntu Medium 13";
+}
+
+/* ── Pas d'icône GTK ─────────────────────────────────────── */
+element-icon {
+    size:               0px;
+    enabled:            false;
+}

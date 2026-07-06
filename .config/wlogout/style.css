@@ -1,0 +1,73 @@
+@import url("/home/akhi_yucef/.config/gtk-3.0/colors.css");
+
+* {
+  background-image: none;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+window {
+  background-color: transparent;
+}
+
+/* --- Ajustement de la hauteur du bandeau --- */
+grid {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+button {
+  border-radius: 0px;
+  border: 0px solid transparent;
+  margin: 0px;
+  color: #FFFFFF;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.4);
+  background-repeat: no-repeat;
+  background-position: center;
+  /* Légèrement réduit pour s'adapter à la nouvelle hauteur */
+  background-size: 24%;
+
+  transition: background-size 0.2s cubic-bezier(.55, 0.0, .28, 1.682),
+    background-color 0.2s ease;
+}
+
+
+button:active,
+button:hover {
+  background-color: alpha(@accent_bg_color, 0.85);
+  background-size: 35%;
+  outline-style: none;
+  border: none;
+}
+
+button:focus {
+  border: none;
+}
+
+
+#lock {
+  background-image: url("/usr/share/wlogout/assets/lock.png");
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+}
+
+#logout {
+  background-image: url("/usr/share/wlogout/assets/logout.png");
+}
+
+#reboot {
+  background-image: url("/usr/share/wlogout/assets/reboot.png");
+}
+
+#shutdown {
+  background-image: url("/usr/share/wlogout/assets/shutdown.png");
+}
+
+#suspend {
+  background-image: url("/usr/share/wlogout/assets/suspend.png");
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}

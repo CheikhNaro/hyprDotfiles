@@ -1,0 +1,21 @@
+# ── Fichiers spécifiques au hardware ────────────────────────────────────────
+.config/hypr/monitors.lua        # à reconfigurer sur chaque machine
+
+# ── Fichiers générés dynamiquement par matugen ──────────────────────────────
+.config/rofi/colors.rasi
+.config/matugen/templates/*.generated
+.config/kitty/current-theme.conf
+.config/kitty/kitty.conf.bak
+
+# ── Données runtime / cache ─────────────────────────────────────────────────
+.config/wayle/runtime.toml
+.config/wayle/schema.json
+.config/wayle/config.toml.example
+.config/wayle/tombi.toml
+
+# ── Fastfetch : historique git interne ──────────────────────────────────────
+.config/fastfetch/.git/
+
+# ── Fichiers de sauvegarde ──────────────────────────────────────────────────
+*.bak
+*~

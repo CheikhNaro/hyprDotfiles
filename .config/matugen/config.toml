@@ -1,0 +1,26 @@
+[config]
+mode = "dark"
+
+[templates.gtk3]
+input_path = '~/.config/matugen/templates/gtk3.css'
+output_path = '~/.config/gtk-3.0/colors.css'
+
+[templates.gtk4]
+input_path = '~/.config/matugen/templates/gtk4.css'
+output_path = '~/.config/gtk-4.0/colors.css'
+
+[templates.rofi]
+input_path = '~/.config/matugen/templates/rofi.rasi'
+output_path = '~/.config/rofi/colors.rasi'
+
+[templates.hyprlock]
+input_path = '~/.config/matugen/templates/hyprlock.conf'
+output_path = '~/.config/hypr/hyprlock/colors.conf'
+
+[templates.sddm]
+input_path = '~/.config/matugen/templates/sddm.conf'
+output_path = '~/.config/sddm-theme/theme.conf'
+
+[templates.hypremoji]
+input_path = '~/.config/matugen/templates/hypremoji.css'
+output_path = '~/.config/hypremoji/style.css'
