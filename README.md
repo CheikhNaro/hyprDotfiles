@@ -166,11 +166,12 @@ just install
 
 ### 6. Config deployment
 
-Clone this repository and copy the `.config` folder to your home directory:
+Clone this repository and copy the `.config` folder as well as the `.zshrc` file to your home directory:
 
 ```bash
 git clone https://github.com/CheikhNaro/hyprDotfiles.git
 cp -r hyprDotfiles/.config/. ~/.config/
+cp hyprDotfiles/.zshrc ~/
 ```
 
 > **⚠️ Important:** The `.config/hypr/modules/monitors.lua` file is **specific to your hardware**.
