@@ -31,9 +31,7 @@
 | **Screen recording** | [wf-recorder](https://github.com/ammen99/wf-recorder) |
 | **Clipboard** | [Clipse](https://github.com/savedra1/clipse) |
 | **Clipboard GUI** | [Clipse-gui](https://github.com/d7omdev/clipse-gui) |
-| **Sleep inhibitor** | [Wayle](https://github.com/nwg-piotr/wayle) |
 | **OSD (volume/brightness)** | [SwayOSD](https://github.com/ErikReider/SwayOSD) |
-| **Session manager** | [UWSM](https://github.com/Vladimir-csp/uwsm) |
 | **Auth agent** | [Hyprpolkitagent](https://github.com/hyprwm/hyprpolkitagent) |
 | **Logout** | [Wlogout](https://github.com/ArtsyMacaw/wlogout) |
 | **Shell prompt** | [Starship](https://starship.rs/) |
@@ -197,21 +195,26 @@ systemctl --user enable --now clipse.service
 systemctl --user enable --now dwindle-clockwise.service
 ```
 
-## 9. 🎨 Theming
-###First launch of Matugen
+### 9. 🎨 Theming : First launch of Matugen
 
-Matugen generates your theme colors from your wallpaper.
+This setup uses **Matugen** to automatically generate a cohesive color palette from the wallpaper. The templates are located in `.config/matugen/templates/` and apply the generated colors to your apps.
 
 ```bash
 #Example:
 matugen image ~/Pictures/your-wallpaper.jpg
 ```
 
----
+### 10. Flatpak Theming
 
-## 🎨 Theming
+Allow Flatpak applications to read your GTK themes and icons:
 
-This setup uses **Matugen** to automatically generate a cohesive color palette from the wallpaper. The templates are located in `.config/matugen/templates/` and apply the generated colors to your apps.
+```bash
+flatpak --user override --filesystem=xdg-config/gtk-3.0:rw
+flatpak --user override --filesystem=xdg-config/gtk-4.0:rw
+flatpak --user override --filesystem=~/.local/share/icons/:ro
+flatpak --user override --filesystem=~/.icons/:ro
+flatpak --user override --filesystem=/usr/share/icons/:ro
+```
 
 ---
 
@@ -219,4 +222,4 @@ This setup uses **Matugen** to automatically generate a cohesive color palette f
 
 I haven't been able to figure out how to properly theme the `hyprpolkitagent` authentication window yet. 
 
-If anyone knows how to apply custom GTK/Matugen styling to it, I would greatly appreciate your help! Please feel free to open a **Pull Request** or an issue to show me how it's done.
+If anyone knows how to apply custom GTK/Matugen styling to it, I would greatly appreciate your help! Please feel free to open a **Pull Request** or an issue to show me how it's done.---
