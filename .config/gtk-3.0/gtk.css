@@ -1,0 +1,9 @@
+decoration, window, window.background, window.titlebar, .titlebar {
+border-radius: 0px;
+}
+window {
+    border: 0px solid transparent;
+}
+
+/* Matugen-generated colors */
+@import url("colors.css");
