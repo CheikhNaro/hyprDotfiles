@@ -205,6 +205,18 @@ Matugen generates your theme colors from your wallpaper.
 #Example:
 matugen image ~/Pictures/your-wallpaper.jpg
 ```
+### 10. Flatpak Theming
+
+Allow Flatpak applications to read your GTK themes and icons:
+
+```bash
+flatpak --user override --filesystem=xdg-config/gtk-3.0:rw
+flatpak --user override --filesystem=xdg-config/gtk-4.0:rw
+flatpak --user override --filesystem=~/.local/share/icons/:ro
+flatpak --user override --filesystem=~/.icons/:ro
+flatpak --user override --filesystem=/usr/share/icons/:ro
+```
+
 
 ---
 
