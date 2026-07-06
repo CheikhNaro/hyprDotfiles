@@ -257,6 +257,7 @@ Here is a list of the main keyboard shortcuts used in this configuration.
 | **Super + 1..0** <br> **Super + PgUp/PgDn** | Switch to workspace |
 | **Super + Shift + 1..0** <br> **Super + Shift + PgUp/PgDn** | Move window to workspace |
 | **Super + H** | Toggle Special/Scratchpad Workspace |
+| **Super + Shift + H** | Move window to Special Workspace |
 | **Super + P** | Toggle Extended/Mirrored Monitor |
 | **Super + L** | Power Menu (Wlogout) |
 | **Super + Shift + C** | Reload Hyprland Configuration |
