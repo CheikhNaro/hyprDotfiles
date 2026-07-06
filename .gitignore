@@ -19,3 +19,17 @@
 # ── Fichiers de sauvegarde ──────────────────────────────────────────────────
 *.bak
 *~
+
+# ── Nouveaux fichiers générés par matugen ─────────────────────────────────
+.config/gtk-3.0/colors.css
+.config/gtk-4.0/colors.css
+.config/hypr/hyprlock/colors.conf
+.config/sddm-theme/theme.conf
+.config/hypremoji/style.css
+
+# ── Fichiers privés et historiques ──────────────────────────────────────────
+.config/gtk-3.0/bookmarks
+.config/clipse/clipboard_history.json
+.config/clipse/clipse.log
+.config/clipse/tmp_files/
+.config/hypremoji/recents.json
