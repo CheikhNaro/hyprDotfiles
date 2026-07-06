@@ -2,9 +2,7 @@
 
 # 🌿 hyprDotfiles
 
-**Custom Hyprland configuration for Fedora 44**
-
-*A modern Wayland desktop, driven by Lua, with dynamic theming via Matugen*
+**Here are my custom Hyprland config files on Fedora**
 
 </div>
 
@@ -20,30 +18,30 @@
 
 | Role | Tool |
 |---|---|
-| **Wayland compositor** | [Hyprland](https://hyprland.org/) |
+| **Wayland compositor** | [Hyprland](https://wiki.hypr.land/Getting-Started/Installation/#:~:text=lionheartp/Hyprland%20Copr%20repository.) |
 | **Config language** | Lua (via hyprtoolkit) |
 | **Terminal** | [Kitty](https://sw.kovidgoyal.net/kitty/) |
 | **Launcher** | [Rofi](https://github.com/lbonn/rofi) (Wayland fork) |
 | **Lock screen** | [Hyprlock](https://github.com/hyprwm/hyprlock) |
-| **Idle daemon** | [Hypridle](https://github.com/hyprwm/hypridle) |
-| **Wallpaper** | [Hyprpaper](https://github.com/hyprwm/hyprpaper) |
+| **Idle daemon** | [Hypridle](https://github.com/hyprwm/hyprpolkitagent) |
+| **Wallpaper** | [AWWW](https://codeberg.org/LGFae/awww) |
 | **Dynamic theming** | [Matugen](https://github.com/InioX/matugen) |
 | **Screenshot** | Custom GTK4 palette + [Grim](https://sr.ht/~emersion/grim/) + [Slurp](https://github.com/emersion/slurp) |
 | **Annotation** | [Satty](https://github.com/gabm/Satty) |
 | **Screen recording** | [wf-recorder](https://github.com/ammen99/wf-recorder) |
 | **Clipboard** | [Clipse](https://github.com/savedra1/clipse) |
+| **Clipboard GUI** | [Clipse-gui](https://github.com/d7omdev/clipse-gui) |
 | **Sleep inhibitor** | [Wayle](https://github.com/nwg-piotr/wayle) |
 | **OSD (volume/brightness)** | [SwayOSD](https://github.com/ErikReider/SwayOSD) |
 | **Session manager** | [UWSM](https://github.com/Vladimir-csp/uwsm) |
 | **Auth agent** | [Hyprpolkitagent](https://github.com/hyprwm/hyprpolkitagent) |
 | **Logout** | [Wlogout](https://github.com/ArtsyMacaw/wlogout) |
-| **File manager** | [Yazi](https://github.com/sxyazi/yazi) |
 | **Shell prompt** | [Starship](https://starship.rs/) |
 | **Shell history** | [Atuin](https://atuin.sh/) |
 | **System monitor** | [Btop](https://github.com/aristocratos/btop) |
 | **Audio visualizer** | [Cava](https://github.com/karlstav/cava) |
-| **Emoji picker** | [HyprEmoji](https://github.com/hyprwm/contrib) |
-| **Fonts** | JetBrainsMono Nerd Font |
+| **Emoji picker** | [HyprEmoji](https://github.com/Musagy/hypremoji) |
+| **Fonts** | [JetBrainsMono Nerd Font](https://www.nerdfonts.com/font-downloads#:~:text=Download-,JetBrainsMono,-%E2%80%A2%20Version%3A%202.304) |
 
 ---
 
@@ -70,7 +68,7 @@ sudo dnf install -y \
 cargo install satty
 
 # Palette generator from wallpaper
-cargo install wallust
+cargo install matugen
 ```
 
 > **Note:** `cargo install` places binaries in `~/.cargo/bin/`.
@@ -140,10 +138,14 @@ This launches `wayle-settings`, which edits the same config the shell reads. Cha
 
 Download **JetBrainsMono Nerd Font** from the [Nerd Fonts releases](https://github.com/ryanoasis/nerd-fonts/releases) :
 
+Download **FiraCode Nerd Font** from the [Nerd Fonts releases](https://www.nerdfonts.com/font-downloads#:~:text=Preview-,FiraCode,-%E2%80%A2%20Version%3A%206.2) :
+
+Download **FiraMono Nerd Font** from the [Nerd Fonts releases](https://www.nerdfonts.com/font-downloads#:~:text=Preview-,FiraMono,-%E2%80%A2%20Original%20Font%20Name) :
+
 ```bash
+# After downloading the fonts, unzip and place them in ~/.local/share/fonts/:
 mkdir -p ~/.local/share/fonts
-# Download JetBrainsMono.tar.xz from GitHub Releases then :
-tar -xf JetBrainsMono.tar.xz -C ~/.local/share/fonts/
+#then
 fc-cache -fv
 ```
 
@@ -152,7 +154,16 @@ fc-cache -fv
 Clipse is not in the Fedora repositories. Download the binary from the [GitHub releases](https://github.com/savedra1/clipse/releases) and place it in `/usr/local/bin/` :
 
 ```bash
-sudo install -m 755 clipse /usr/local/bin/clipse
+sudo dnf copr enable azandure/clipse
+sudo dnf install clipse
+```
+
+Download and install Clipse GUI:
+
+```bash
+git clone https://github.com/d7omdev/clipse-gui
+cd clipse-gui
+just install
 ```
 
 ### 6. Config deployment
@@ -166,7 +177,9 @@ cp -r hyprDotfiles/.config/. ~/.config/
 
 > **⚠️ Important:** The `.config/hypr/modules/monitors.lua` file is **specific to your hardware**.
 > Edit it to match your monitors before starting Hyprland.
+> Also edit the `.config/hypr/modules/binds.lua` file to your need.
 
+```bash
 ### 7. User systemd services
 
 Enable the services to start at login:
