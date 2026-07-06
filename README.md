@@ -222,12 +222,13 @@ flatpak --user override --filesystem=/usr/share/icons/:ro
 
 ## ⌨️ Keybinds
 
-Here is a list of the main keyboard shortcuts used in this configuration. The `Super` key refers to the Windows/Command key.
+Here is a list of the main keyboard shortcuts used in this configuration.
 
 ### Apps & Launchers
 | Shortcut | Action |
 |---|---|
-| **Super + Return** / **K** | Terminal (Kitty) |
+| **Super + K** | Terminal (Kitty) |
+| **Super + Return** | Terminal (wezterm) |
 | **Super + E** | File Manager (Nautilus) |
 | **Super + Shift + E** | Terminal File Manager (Yazi) |
 | **Super + 2** | Zen Browser |
@@ -235,7 +236,7 @@ Here is a list of the main keyboard shortcuts used in this configuration. The `S
 | **Super + W** | Wallpaper Selector |
 | **Super + V** | Clipboard History (Clipse GUI) |
 | **Super + .** | Emoji Picker (HyprEmoji) |
-| **Print** | Screenshot / Recording Palette |
+| **Print** | Screenshot / Recording |
 
 ### Window Management
 | Shortcut | Action |
@@ -253,8 +254,8 @@ Here is a list of the main keyboard shortcuts used in this configuration. The `S
 ### Workspaces & System
 | Shortcut | Action |
 |---|---|
-| **Super + 1..0** | Switch to workspace |
-| **Super + Shift + 1..0**| Move window to workspace |
+| **Super + 1..0** <br> **Super + PgUp/PgDn** | Switch to workspace |
+| **Super + Shift + 1..0** <br> **Super + Shift + PgUp/PgDn** | Move window to workspace |
 | **Super + H** | Toggle Special/Scratchpad Workspace |
 | **Super + P** | Toggle Extended/Mirrored Monitor |
 | **Super + L** | Power Menu (Wlogout) |
