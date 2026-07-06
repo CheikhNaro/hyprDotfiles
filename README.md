@@ -222,4 +222,4 @@ flatpak --user override --filesystem=/usr/share/icons/:ro
 
 I haven't been able to figure out how to properly theme the `hyprpolkitagent` authentication window yet. 
 
-If anyone knows how to apply custom GTK/Matugen styling to it, I would greatly appreciate your help! Please feel free to open a **Pull Request** or an issue to show me how it's done.---
+If anyone knows how to apply custom GTK/Matugen styling to it, I would greatly appreciate your help! Please feel free to open a **Pull Request** or an issue to show me how it's done.
