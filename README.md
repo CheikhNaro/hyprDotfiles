@@ -19,7 +19,6 @@
 | Role | Tool |
 |---|---|
 | **Wayland compositor** | [Hyprland](https://wiki.hypr.land/Getting-Started/Installation/#:~:text=lionheartp/Hyprland%20Copr%20repository.) |
-| **Config language** | Lua (via hyprtoolkit) |
 | **Terminal** | [Kitty](https://sw.kovidgoyal.net/kitty/) |
 | **Launcher** | [Rofi](https://github.com/lbonn/rofi) (Wayland fork) |
 | **Lock screen** | [Hyprlock](https://github.com/hyprwm/hyprlock) |
