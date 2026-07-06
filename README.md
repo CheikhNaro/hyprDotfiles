@@ -2,38 +2,38 @@
 
 # 🌿 hyprDotfiles
 
-**Configuration Hyprland personnalisée pour Fedora 44**
+**Custom Hyprland configuration for Fedora 44**
 
-*Un bureau Wayland moderne, piloté par Lua, avec theming dynamique via Matugen*
+*A modern Wayland desktop, driven by Lua, with dynamic theming via Matugen*
 
 </div>
 
 ---
 
-## 📸 Aperçu
+## 📸 Preview
 
-> *(Ajouter des screenshots ici)*
+> *(Add screenshots here)*
 
 ---
 
-## 🧩 Stack utilisée
+## 🧩 Stack used
 
-| Rôle | Outil |
+| Role | Tool |
 |---|---|
-| **Compositeur Wayland** | [Hyprland](https://hyprland.org/) |
+| **Wayland compositor** | [Hyprland](https://hyprland.org/) |
 | **Config language** | Lua (via hyprtoolkit) |
 | **Terminal** | [Kitty](https://sw.kovidgoyal.net/kitty/) |
 | **Launcher** | [Rofi](https://github.com/lbonn/rofi) (Wayland fork) |
 | **Lock screen** | [Hyprlock](https://github.com/hyprwm/hyprlock) |
 | **Idle daemon** | [Hypridle](https://github.com/hyprwm/hypridle) |
 | **Wallpaper** | [Hyprpaper](https://github.com/hyprwm/hyprpaper) |
-| **Theming dynamique** | [Matugen](https://github.com/InioX/matugen) |
-| **Capture d'écran** | Palette GTK4 custom + [Grim](https://sr.ht/~emersion/grim/) + [Slurp](https://github.com/emersion/slurp) |
+| **Dynamic theming** | [Matugen](https://github.com/InioX/matugen) |
+| **Screenshot** | Custom GTK4 palette + [Grim](https://sr.ht/~emersion/grim/) + [Slurp](https://github.com/emersion/slurp) |
 | **Annotation** | [Satty](https://github.com/gabm/Satty) |
 | **Screen recording** | [wf-recorder](https://github.com/ammen99/wf-recorder) |
-| **Presse-papiers** | [Clipse](https://github.com/savedra1/clipse) |
+| **Clipboard** | [Clipse](https://github.com/savedra1/clipse) |
 | **Sleep inhibitor** | [Wayle](https://github.com/nwg-piotr/wayle) |
-| **OSD (volume/luminosité)** | [SwayOSD](https://github.com/ErikReider/SwayOSD) |
+| **OSD (volume/brightness)** | [SwayOSD](https://github.com/ErikReider/SwayOSD) |
 | **Session manager** | [UWSM](https://github.com/Vladimir-csp/uwsm) |
 | **Auth agent** | [Hyprpolkitagent](https://github.com/hyprwm/hyprpolkitagent) |
 | **Logout** | [Wlogout](https://github.com/ArtsyMacaw/wlogout) |
@@ -43,13 +43,13 @@
 | **System monitor** | [Btop](https://github.com/aristocratos/btop) |
 | **Audio visualizer** | [Cava](https://github.com/karlstav/cava) |
 | **Emoji picker** | [HyprEmoji](https://github.com/hyprwm/contrib) |
-| **Polices** | JetBrainsMono Nerd Font |
+| **Fonts** | JetBrainsMono Nerd Font |
 
 ---
 
 ## ⚙️ Installation
 
-### 1. Paquets système (Fedora 44 / DNF)
+### 1. System packages (Fedora 44 / DNF)
 
 ```bash
 sudo dnf install -y \
@@ -63,56 +63,113 @@ sudo dnf install -y \
   cargo rust
 ```
 
-### 2. Outils Cargo (compilés depuis les sources)
+### 2. Cargo tools (compiled from source)
 
 ```bash
-# Annotation de captures d'écran
+# Screenshot annotation
 cargo install satty
 
-# Sleep inhibitor bar item
-cargo install wayle wayle-settings
-
-# Générateur de palettes depuis wallpaper
+# Palette generator from wallpaper
 cargo install wallust
 ```
 
-> **Note :** `cargo install` place les binaires dans `~/.cargo/bin/`.
-> Assurez-vous que ce chemin est dans votre `$PATH`.
+> **Note:** `cargo install` places binaries in `~/.cargo/bin/`.
+> Make sure this path is in your `$PATH`.
 
-### 3. Polices
+### 3. Wayle (Sleep inhibitor bar item)
 
-Télécharger **JetBrainsMono Nerd Font** depuis les [Nerd Fonts releases](https://github.com/ryanoasis/nerd-fonts/releases) :
+Requires Fedora 42 or later. Fedora 41 reached EOL on 2025-11-19.
+
+**Install dependencies**
+Install Rust via rustup, then the system libraries:
+
+```bash
+sudo dnf install git cmake pkgconf-pkg-config gtk4-devel gtk4-layer-shell-devel \
+  gtksourceview5-devel pulseaudio-libs-devel fftw-devel pipewire-devel \
+  systemd-devel clang gcc
+```
+
+Fedora Workstation already ships the runtime daemons for battery, bluetooth, network, power, and audio. Minimal and Server installs need:
+
+```bash
+sudo dnf install pipewire-pulseaudio wireplumber NetworkManager bluez upower \
+  power-profiles-daemon
+sudo systemctl enable --now bluetooth NetworkManager upower power-profiles-daemon
+```
+
+**Build**
+
+```bash
+git clone https://github.com/wayle-rs/wayle
+cd wayle
+cargo install --path wayle
+cargo install --path crates/wayle-settings
+```
+
+**Icon assets**
+Wayle ships icons as source files that get copied into your user data directory on first setup. Run this from the cloned repo, before deleting it:
+
+```bash
+wayle icons setup
+```
+
+**Run**
+Start the panel in the background:
+
+```bash
+wayle panel start
+```
+
+Other lifecycle commands: `wayle panel status`, `wayle panel restart`, `wayle panel stop`.
+
+For debugging, run the shell in the foreground so logs print to the terminal:
+
+```bash
+wayle shell
+```
+
+**Settings GUI**
+
+```bash
+wayle panel settings
+```
+
+This launches `wayle-settings`, which edits the same config the shell reads. Changes apply live. Anything the GUI doesn't cover can still be edited by hand in `config.toml`.
+
+### 4. Fonts
+
+Download **JetBrainsMono Nerd Font** from the [Nerd Fonts releases](https://github.com/ryanoasis/nerd-fonts/releases) :
 
 ```bash
 mkdir -p ~/.local/share/fonts
-# Télécharger JetBrainsMono.tar.xz depuis GitHub Releases puis :
+# Download JetBrainsMono.tar.xz from GitHub Releases then :
 tar -xf JetBrainsMono.tar.xz -C ~/.local/share/fonts/
 fc-cache -fv
 ```
 
-### 4. Clipse (gestionnaire de presse-papiers)
+### 5. Clipse (clipboard manager)
 
-Clipse n'est pas dans les dépôts Fedora. Téléchargez le binaire depuis les [releases GitHub](https://github.com/savedra1/clipse/releases) et placez-le dans `/usr/local/bin/` :
+Clipse is not in the Fedora repositories. Download the binary from the [GitHub releases](https://github.com/savedra1/clipse/releases) and place it in `/usr/local/bin/` :
 
 ```bash
 sudo install -m 755 clipse /usr/local/bin/clipse
 ```
 
-### 5. Déploiement des configs
+### 6. Config deployment
 
-Clonez ce dépôt et copiez le dossier `.config` dans votre home :
+Clone this repository and copy the `.config` folder to your home directory:
 
 ```bash
 git clone https://github.com/CheikhNaro/hyprDotfiles.git
 cp -r hyprDotfiles/.config/. ~/.config/
 ```
 
-> **⚠️ Important :** Le fichier `.config/hypr/modules/monitors.lua` est **spécifique à votre hardware**.
-> Modifiez-le pour correspondre à vos moniteurs avant de lancer Hyprland.
+> **⚠️ Important:** The `.config/hypr/modules/monitors.lua` file is **specific to your hardware**.
+> Edit it to match your monitors before starting Hyprland.
 
-### 6. Services systemd utilisateur
+### 7. User systemd services
 
-Activez les services au démarrage de session :
+Enable the services to start at login:
 
 ```bash
 systemctl --user daemon-reload
@@ -120,38 +177,38 @@ systemctl --user enable --now clipse.service
 systemctl --user enable --now dwindle-clockwise.service
 ```
 
-### 7. Premier lancement de Matugen
+### 8. First launch of Matugen
 
-Matugen génère les couleurs de votre thème depuis votre fond d'écran.
-Placez votre wallpaper dans `~/Pictures/` puis lancez :
+Matugen generates your theme colors from your wallpaper.
+Place your wallpaper in `~/Pictures/` then run:
 
 ```bash
-matugen image ~/Pictures/votre-wallpaper.jpg
+matugen image ~/Pictures/your-wallpaper.jpg
 ```
 
 ---
 
-## 📁 Structure du repo
+## 📁 Repository structure
 
 ```
 hyprDotfiles/
 └── .config/
-    ├── hypr/                   # Config Hyprland (Lua)
+    ├── hypr/                   # Hyprland config (Lua)
     │   ├── modules/            # animations, binds, env, window_rules...
-    │   ├── scripts/            # Scripts bash personnalisés
-    │   ├── screenshot-palette/ # Outil de capture GTK4 (Python)
-    │   └── hyprland.lua        # Point d'entrée
-    ├── rofi/                   # Launcher et menus
+    │   ├── scripts/            # Custom bash scripts
+    │   ├── screenshot-palette/ # GTK4 capture tool (Python)
+    │   └── hyprland.lua        # Entry point
+    ├── rofi/                   # Launcher and menus
     ├── kitty/                  # Terminal
-    ├── matugen/                # Templates de theming dynamique
-    ├── wlogout/                # Écran de déconnexion
+    ├── matugen/                # Dynamic theming templates
+    ├── wlogout/                # Logout screen
     ├── wayle/                  # Sleep inhibitor
     ├── fastfetch/              # System info
     ├── btop/                   # Process monitor
     ├── cava/                   # Audio visualizer
     ├── yazi/                   # File manager
     ├── swayosd/                # OSD overlay
-    ├── systemd/                # Services utilisateur
+    ├── systemd/                # User services
     └── starship.toml           # Shell prompt
 ```
 
@@ -159,7 +216,7 @@ hyprDotfiles/
 
 ## 🎨 Theming
 
-Ce setup utilise **Matugen** pour générer automatiquement une palette de couleurs cohérente depuis le fond d'écran. Les templates se trouvent dans `.config/matugen/templates/` et appliquent les couleurs générées à :
+This setup uses **Matugen** to automatically generate a cohesive color palette from the wallpaper. The templates are located in `.config/matugen/templates/` and apply the generated colors to:
 
 - Rofi
 - Hyprlock
@@ -171,6 +228,6 @@ Ce setup utilise **Matugen** pour générer automatiquement une palette de coule
 
 ## 📋 Notes
 
-- La config Hyprland est écrite en **Lua** via `hyprtoolkit`, pas en `.conf` standard.
-- Le fichier `monitors.lua` est intentionnellement exclu du repo (hardware-specific).
-- `rofi/colors.rasi` est exclu car généré par Matugen.
+- The Hyprland config is written in **Lua** via `hyprtoolkit`, not in standard `.conf`.
+- The `monitors.lua` file is intentionally excluded from the repo (hardware-specific).
+- `rofi/colors.rasi` is excluded because it is generated by Matugen.
