@@ -216,6 +216,50 @@ flatpak --user override --filesystem=~/.icons/:ro
 flatpak --user override --filesystem=/usr/share/icons/:ro
 ```
 
+> **⚠️ Important:** You must install Flatpak applications using the `--user` flag (e.g., `flatpak --user install flathub org.gnome.Calculator`), and **not** `flatpak install ...` at the system level. If you install them system-wide, the apps will never adapt to your dynamically generated color themes.
+
+---
+
+## ⌨️ Keybinds
+
+Here is a list of the main keyboard shortcuts used in this configuration. The `Super` key refers to the Windows/Command key.
+
+### Apps & Launchers
+| Shortcut | Action |
+|---|---|
+| **Super + Return** / **K** | Terminal (Kitty) |
+| **Super + E** | File Manager (Nautilus) |
+| **Super + Shift + E** | Terminal File Manager (Yazi) |
+| **Super + 2** | Zen Browser |
+| **Alt + Space** | App Launcher (Rofi) |
+| **Super + W** | Wallpaper Selector |
+| **Super + V** | Clipboard History (Clipse GUI) |
+| **Super + .** | Emoji Picker (HyprEmoji) |
+| **Print** | Screenshot / Recording Palette |
+
+### Window Management
+| Shortcut | Action |
+|---|---|
+| **Ctrl + Q** | Close active window |
+| **Alt + Tab** / **Super + Tab** | Window switcher (Snappy Switcher) |
+| **Super + F** | Toggle Floating / Center window |
+| **Super + Up/Down** | Maximize / Restore window |
+| **Alt + Arrows** | Move focus |
+| **Super + Alt + Arrows**| Swap window position |
+| **Super + Shift + Arrows**| Snap window to screen half |
+| **Super + Mouse Drag** | Move/Resize floating window |
+| **Ctrl + Shift + R** | Enter Resize Mode (Use arrows, ESC to exit) |
+
+### Workspaces & System
+| Shortcut | Action |
+|---|---|
+| **Super + 1..0** | Switch to workspace |
+| **Super + Shift + 1..0**| Move window to workspace |
+| **Super + H** | Toggle Special/Scratchpad Workspace |
+| **Super + P** | Toggle Extended/Mirrored Monitor |
+| **Super + L** | Power Menu (Wlogout) |
+| **Super + Shift + C** | Reload Hyprland Configuration |
+
 ---
 
 ## Help Wanted: Hyprpolkitagent Theming
