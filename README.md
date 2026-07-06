@@ -136,11 +136,11 @@ This launches `wayle-settings`, which edits the same config the shell reads. Cha
 
 ### 4. Fonts
 
-Download **JetBrainsMono Nerd Font** from the [Nerd Fonts releases](https://github.com/ryanoasis/nerd-fonts/releases) :
+Download **JetBrainsMono Nerd Font** from the [Here](https://github.com/ryanoasis/nerd-fonts/releases)
 
-Download **FiraCode Nerd Font** from the [Nerd Fonts releases](https://www.nerdfonts.com/font-downloads#:~:text=Preview-,FiraCode,-%E2%80%A2%20Version%3A%206.2) :
+Download **FiraCode Nerd Font** from the [Here](https://www.nerdfonts.com/font-downloads#:~:text=Preview-,FiraCode,-%E2%80%A2%20Version%3A%206.2)
 
-Download **FiraMono Nerd Font** from the [Nerd Fonts releases](https://www.nerdfonts.com/font-downloads#:~:text=Preview-,FiraMono,-%E2%80%A2%20Original%20Font%20Name) :
+Download **FiraMono Nerd Font** from the [Here](https://www.nerdfonts.com/font-downloads#:~:text=Preview-,FiraMono,-%E2%80%A2%20Original%20Font%20Name)
 
 ```bash
 # After downloading the fonts, unzip and place them in ~/.local/share/fonts/:
