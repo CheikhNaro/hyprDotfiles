@@ -179,8 +179,15 @@ cp -r hyprDotfiles/.config/. ~/.config/
 > Edit it to match your monitors before starting Hyprland.
 > Also edit the `.config/hypr/modules/binds.lua` file to your need.
 
+### 7. SDDM Themes
+
+The repository includes custom SDDM themes (`pixie` and `thyx`). Copy them to the system directory:
+
 ```bash
-### 7. User systemd services
+sudo cp -r hyprDotfiles/sddm/themes/* /usr/share/sddm/themes/
+```
+
+### 8. User systemd services
 
 Enable the services to start at login:
 
@@ -190,7 +197,7 @@ systemctl --user enable --now clipse.service
 systemctl --user enable --now dwindle-clockwise.service
 ```
 
-### 8. First launch of Matugen
+### 9. First launch of Matugen
 
 Matugen generates your theme colors from your wallpaper.
 Place your wallpaper in `~/Pictures/` then run:
