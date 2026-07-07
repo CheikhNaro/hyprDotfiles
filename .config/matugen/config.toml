@@ -24,3 +24,7 @@ output_path = '~/.config/sddm-theme/theme.conf'
 [templates.hypremoji]
 input_path = '~/.config/matugen/templates/hypremoji.css'
 output_path = '~/.config/hypremoji/style.css'
+
+[templates.screenshot-palette]
+input_path = '~/.config/matugen/templates/screenshot-palette.css'
+output_path = '~/.config/hypr/screenshot-palette/style.css'
