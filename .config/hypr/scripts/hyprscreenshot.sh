@@ -78,14 +78,13 @@ _notify_record() {
 _build_audio_args() {
     local args=""
     if [ "$AUDIO_MIC" = "true" ] && [ "$AUDIO_SINK" = "true" ]; then
-        # Les deux : on passe le micro (wf-recorder ne supporte qu'une source)
-        # Pour la sortie système on utilise le monitor du sink
-        # On préfère le monitor sink car ça capture le son du PC + micro via loopback PW
-        args="--audio=${SINK_DEVICE}"
+        # wf-recorder ne gère qu'une seule source audio. 
+        # Pour enregistrer le PC, il faut écouter le "monitor" du sink.
+        args="--audio=${SINK_DEVICE}.monitor"
     elif [ "$AUDIO_MIC" = "true" ] && [ -n "$MIC_DEVICE" ]; then
         args="--audio=${MIC_DEVICE}"
     elif [ "$AUDIO_SINK" = "true" ] && [ -n "$SINK_DEVICE" ]; then
-        args="--audio=${SINK_DEVICE}"
+        args="--audio=${SINK_DEVICE}.monitor"
     fi
     echo "$args"
 }
