@@ -32,6 +32,8 @@ def color_get(key: str, fallback: str) -> str:
 primary_hex = color_get('primary', '#5585c8')
 target_rgb  = hex_to_rgb(primary_hex)
 
+import colorsys
+
 # ── Correspondance thème d'icônes ────────────────────────────────────────────
 ICON_THEMES = {
     'blue':   (53,  132, 228),
@@ -46,7 +48,18 @@ ICON_THEMES = {
     'yellow': (246, 211, 45),
 }
 
-closest = min(ICON_THEMES, key=lambda name: math.dist(target_rgb, ICON_THEMES[name]))
+def color_distance_hsv(rgb1, rgb2):
+    """Calcule une distance en privilégiant fortement la teinte (Hue)"""
+    h1, s1, v1 = colorsys.rgb_to_hsv(rgb1[0]/255, rgb1[1]/255, rgb1[2]/255)
+    h2, s2, v2 = colorsys.rgb_to_hsv(rgb2[0]/255, rgb2[1]/255, rgb2[2]/255)
+    
+    # Distance circulaire pour la teinte (0.0 et 1.0 sont identiques : rouge)
+    dh = min(abs(h1 - h2), 1.0 - abs(h1 - h2))
+    
+    # On donne un poids énorme à la teinte (Hue), puis un peu à la saturation
+    return (dh * 10) ** 2 + (s1 - s2) ** 2 + ((v1 - v2) * 0.5) ** 2
+
+closest = min(ICON_THEMES, key=lambda name: color_distance_hsv(target_rgb, ICON_THEMES[name]))
 subprocess.run(
     ['gsettings', 'set', 'org.gnome.desktop.interface', 'icon-theme', f'Adwaita-{closest}'],
     check=False
