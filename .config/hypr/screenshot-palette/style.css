@@ -1,6 +1,5 @@
-/* ─── HyprScreenshot Palette ──────────────────────────────────────────────
-   Style GNOME Screenshot Tool — Couleurs Matugen
-   bg: #16130b  |  bg-alt: #2d2a21  |  fg: #e9e2d4  |  accent: #e0c56d
+/* ─── HyprScreenshot Palette v2 ───────────────────────────────────────────
+   bg: #1e1b12  |  bg-alt: #2d2a21  |  fg: #e9e2d4  |  accent: #e0c56d
    ─────────────────────────────────────────────────────────────────────── */
 
 /* Fenêtre principale */
@@ -10,7 +9,6 @@
     border: 1px solid rgba(224, 197, 109, 0.22);
 }
 
-/* Box racine */
 .root-box {
     padding: 0;
     margin: 0;
@@ -33,7 +31,6 @@
     transition: background-color 120ms ease, border-color 120ms ease;
 }
 
-/* Reset style Adwaita agressif */
 .mode-btn,
 .mode-btn:focus {
     box-shadow: none;
@@ -80,13 +77,143 @@
     color: rgba(224, 197, 109, 0.85);
 }
 
+/* ── Section options enregistrement ────────────────────────────────────── */
+.rec-options-section {
+    background-color: rgba(0, 0, 0, 0.18);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 6px 10px;
+}
+
+/* Rangée Format + Timer */
+.fmt-timer-row {
+    padding: 2px 0 6px 0;
+}
+
+.options-label {
+    font-family: "Ubuntu", sans-serif;
+    font-size: 10px;
+    color: rgba(233, 226, 212, 0.45);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Groupe de boutons format / timer */
+.fmt-group {
+    border-radius: 8px;
+    background-color: rgba(45, 42, 33, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 2px;
+}
+
+.fmt-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 3px 9px;
+    min-height: 26px;
+    box-shadow: none;
+    outline: none;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 11px;
+    color: rgba(233, 226, 212, 0.65);
+    transition: background-color 100ms ease;
+}
+
+.fmt-btn:hover {
+    background-color: rgba(255, 255, 255, 0.07);
+    color: rgba(233, 226, 212, 0.90);
+}
+
+.fmt-btn:checked {
+    background-color: rgba(224, 197, 109, 0.20);
+    border-color: rgba(224, 197, 109, 0.45);
+    color: #e0c56d;
+}
+
+/* Rangée Audio */
+.audio-row {
+    padding: 2px 0 2px 0;
+    min-height: 40px;
+}
+
+.audio-device-box {
+    border-radius: 10px;
+    background-color: rgba(45, 42, 33, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 3px;
+}
+
+.audio-toggle-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    padding: 4px 7px;
+    min-width: 32px;
+    min-height: 32px;
+    box-shadow: none;
+    outline: none;
+    transition: background-color 120ms ease;
+}
+
+.audio-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.audio-toggle-active {
+    background-color: rgba(224, 197, 109, 0.18) !important;
+    border-color: rgba(224, 197, 109, 0.45) !important;
+}
+
+.audio-icon {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 18px;
+    color: rgba(233, 226, 212, 0.60);
+}
+
+.audio-toggle-active .audio-icon {
+    color: #e0c56d;
+}
+
+.audio-dropdown {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    outline: none;
+    min-width: 120px;
+    max-width: 160px;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 11px;
+    color: rgba(233, 226, 212, 0.75);
+}
+
+.audio-dropdown button {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 2px 4px;
+    border-radius: 6px;
+    color: rgba(233, 226, 212, 0.75);
+    font-size: 11px;
+}
+
+.audio-dropdown button:hover {
+    background-color: rgba(255, 255, 255, 0.07);
+}
+
+.audio-sep {
+    margin: 4px 4px;
+    background-color: rgba(255, 255, 255, 0.08);
+    min-width: 1px;
+}
+
 /* ── Rangée basse (action + déclencheur) ──────────────────────────────── */
 .action-row {
     padding: 4px 10px 12px 10px;
     min-height: 72px;
 }
 
-/* Groupe des deux petits boutons type */
+/* Groupe type (photo / record) */
 .type-group {
     border-radius: 12px;
     background-color: rgba(45, 42, 33, 0.6);
@@ -156,5 +283,13 @@
 .trigger-icon {
     font-family: "JetBrainsMono Nerd Font";
     font-size: 38px;
+    color: #16130b;
+}
+
+/* Compte à rebours */
+.countdown-label {
+    font-family: "Ubuntu", sans-serif;
+    font-size: 28px;
+    font-weight: bold;
     color: #16130b;
 }
