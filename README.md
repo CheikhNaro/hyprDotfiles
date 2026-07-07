@@ -24,7 +24,7 @@
 | **Lock screen** | [Hyprlock](https://github.com/hyprwm/hyprlock) |
 | **Idle daemon** | [Hypridle](https://github.com/hyprwm/hyprpolkitagent) |
 | **Wallpaper** | [AWWW](https://codeberg.org/LGFae/awww) |
-| **Dynamic theming** | [Matugen](https://github.com/InioX/matugen) |
+| **Dynamic theming** | [Wallust](https://codeberg.org/explosion-mental/wallust) |
 | **Screenshot** | Custom GTK4 palette + [Grim](https://sr.ht/~emersion/grim/) + [Slurp](https://github.com/emersion/slurp) |
 | **Annotation** | [Satty](https://github.com/gabm/Satty) |
 | **Screen recording** | [wf-recorder](https://github.com/ammen99/wf-recorder) |
@@ -65,7 +65,7 @@ sudo dnf install -y \
 cargo install satty
 
 # Palette generator from wallpaper
-cargo install matugen
+cargo install wallust
 ```
 
 > **Note:** `cargo install` places binaries in `~/.cargo/bin/`.
@@ -195,13 +195,13 @@ systemctl --user enable --now clipse.service
 systemctl --user enable --now dwindle-clockwise.service
 ```
 
-### 9. Theming : First launch of Matugen
+### 9. Theming : First launch of Wallust
 
-This setup uses **Matugen** to automatically generate a cohesive color palette from the wallpaper. The templates are located in `.config/matugen/templates/` and apply the generated colors to your apps.
+This setup uses **Wallust** to automatically generate a cohesive 16-color palette from the wallpaper. The templates are located in `.config/wallust/templates/` and apply the generated colors to your apps.
 
 ```bash
 #Example:
-matugen image ~/Pictures/your-wallpaper.jpg
+wallust run ~/Pictures/your-wallpaper.jpg
 ```
 
 ### 10. Flatpak Theming
@@ -268,4 +268,4 @@ Here is a list of the main keyboard shortcuts used in this configuration.
 
 I haven't been able to figure out how to properly theme the `hyprpolkitagent` authentication window yet. 
 
-If anyone knows how to apply custom GTK/Matugen styling to it, I would greatly appreciate your help! Please feel free to open a **Pull Request** or an issue to show me how it's done.
+If anyone knows how to apply custom GTK/Wallust styling to it, I would greatly appreciate your help! Please feel free to open a **Pull Request** or an issue to show me how it's done.
