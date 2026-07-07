@@ -32,8 +32,17 @@ if [ "$1" = "--list" ]; then
         (
             ~/.cargo/bin/wayle wallpaper set "$WALLPAPER_PATH"
             sleep 0.2
-            wallust run "$WALLPAPER_PATH"
-            WALLUST_JSON="$(cat ~/.cache/wallust/colors.json)"
+            
+            PROVIDER=$(grep -E '^theme-provider\s*=' ~/.config/wayle/runtime.toml | awk -F '"' '{print $2}')
+            
+            if [ "$PROVIDER" = "wallust" ]; then
+                wallust run "$WALLPAPER_PATH"
+                THEME_JSON="$(cat ~/.cache/wallust/colors.json 2>/dev/null)"
+            else
+                matugen image "$WALLPAPER_PATH" --prefer saturation
+                THEME_JSON="$(matugen image "$WALLPAPER_PATH" --prefer saturation --json hex)"
+            fi
+            
             cp "$WALLPAPER_PATH" "/usr/share/sddm/themes/pixie/assets/background.jpg" 2>/dev/null
             cp "$HOME/.config/sddm-theme/theme.conf" "/usr/share/sddm/themes/pixie/theme.conf" 2>/dev/null
             gen_missing_thumbs
@@ -42,8 +51,8 @@ if [ "$1" = "--list" ]; then
             pkill swayosd-server; swayosd-server &
             nautilus -q
             magick "$WALLPAPER_PATH" -resize 1920x1080^ -quality 85 "$HOME/.cache/wlogout-bg.jpg" 2>/dev/null
-            echo "$WALLUST_JSON" | ~/.config/rofi/update-wayle-palette.py "$HOME/.cache/wlogout-bg.jpg"
-            echo "$WALLUST_JSON" | python3 ~/.config/hypr/scripts/generate-hyprtoolkit.py
+            echo "$THEME_JSON" | ~/.config/rofi/update-wayle-palette.py "$HOME/.cache/wlogout-bg.jpg"
+            echo "$THEME_JSON" | python3 ~/.config/hypr/scripts/generate-hyprtoolkit.py
         ) </dev/null >/dev/null 2>&1 & disown
     fi
 

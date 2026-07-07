@@ -1,0 +1,330 @@
+/* ─── HyprScreenshot Palette v2 — Matugen ──────────────────────────────────
+   Généré automatiquement par Matugen 
+   ─────────────────────────────────────────────────────────────────────── */
+
+:root {
+    --bg-dark: {{colors.background.default.hex}};
+    --bg-surface: {{colors.surface_container.default.hex}};
+    --fg: {{colors.on_surface.default.hex}};
+    --accent: {{colors.primary.default.hex}};
+    
+    /* Variables avec opacité (Hex alpha) */
+    --accent-0: {{colors.primary.default.hex}}00;
+    --accent-16: {{colors.primary.default.hex}}29;
+    --accent-18: {{colors.primary.default.hex}}2e;
+    --accent-20: {{colors.primary.default.hex}}33;
+    --accent-22: {{colors.primary.default.hex}}38;
+    --accent-45: {{colors.primary.default.hex}}73;
+    --accent-50: {{colors.primary.default.hex}}80;
+    --accent-55: {{colors.primary.default.hex}}8c;
+    
+    --fg-45: {{colors.on_surface.default.hex}}73;
+    --fg-55: {{colors.on_surface.default.hex}}8c;
+    --fg-60: {{colors.on_surface.default.hex}}99;
+    --fg-65: {{colors.on_surface.default.hex}}a6;
+    --fg-75: {{colors.on_surface.default.hex}}bf;
+    --fg-80: {{colors.on_surface.default.hex}}cc;
+    --fg-85: {{colors.on_surface.default.hex}}d9;
+    --fg-90: {{colors.on_surface.default.hex}}e6;
+
+    --white-06: #ffffff0f;
+    --white-07: #ffffff12;
+    --white-08: #ffffff14;
+    --white-10: #ffffff1a;
+    
+    --surface-55: {{colors.surface_container_high.default.hex}}8c;
+    --surface-60: {{colors.surface_container_high.default.hex}}99;
+    --surface-70: {{colors.surface_container_high.default.hex}}b3;
+}
+
+/* Fenêtre principale */
+.palette-window {
+    background-color: var(--bg-dark);
+    border-radius: 20px;
+    border: 1px solid var(--accent-22);
+}
+
+.root-box {
+    padding: 0;
+    margin: 0;
+}
+
+/* ── Rangée haute (mode) ───────────────────────────────────────────────── */
+.mode-row {
+    padding: 10px 10px 6px 10px;
+}
+
+.mode-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 8px 6px 6px 6px;
+    min-width: 84px;
+    min-height: 76px;
+    box-shadow: none;
+    outline: none;
+    transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.mode-btn,
+.mode-btn:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.mode-btn:hover {
+    background-color: var(--white-07);
+    border-color: var(--white-10);
+}
+
+.mode-btn:checked {
+    background-color: var(--accent-16);
+    border-color: var(--accent-55);
+}
+
+.mode-icon {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 34px;
+    color: var(--fg-85);
+    margin-bottom: 1px;
+}
+
+.screen-icon {
+    margin-right: 8px;
+}
+
+.photo-icon {
+    margin-right: 4px;
+}
+
+.mode-btn:checked .mode-icon {
+    color: var(--accent);
+}
+
+.mode-label {
+    font-family: "Ubuntu", sans-serif;
+    font-size: 11px;
+    color: var(--fg-55);
+    letter-spacing: 0.3px;
+}
+
+.mode-btn:checked .mode-label {
+    color: var(--fg-85);
+}
+
+/* ── Section options enregistrement ────────────────────────────────────── */
+.rec-options-section {
+    background-color: rgba(0, 0, 0, 0.18);
+    border-top: 1px solid var(--white-06);
+    border-bottom: 1px solid var(--white-06);
+    padding: 6px 10px;
+}
+
+/* Rangée Format + Timer */
+.fmt-timer-row {
+    padding: 2px 0 6px 0;
+}
+
+.options-label {
+    font-family: "Ubuntu", sans-serif;
+    font-size: 10px;
+    color: var(--fg-45);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Groupe de boutons format / timer */
+.fmt-group {
+    border-radius: 8px;
+    background-color: var(--surface-70);
+    border: 1px solid var(--white-07);
+    padding: 2px;
+}
+
+.fmt-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 3px 9px;
+    min-height: 26px;
+    box-shadow: none;
+    outline: none;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 11px;
+    color: var(--fg-65);
+    transition: background-color 100ms ease;
+}
+
+.fmt-btn:hover {
+    background-color: var(--white-07);
+    color: var(--fg-90);
+}
+
+.fmt-btn:checked {
+    background-color: var(--accent-20);
+    border-color: var(--accent-45);
+    color: var(--accent);
+}
+
+/* Rangée Audio */
+.audio-row {
+    padding: 2px 0 2px 0;
+    min-height: 40px;
+}
+
+.audio-device-box {
+    border-radius: 10px;
+    background-color: var(--surface-55);
+    border: 1px solid var(--white-07);
+    padding: 3px;
+}
+
+.audio-toggle-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    padding: 4px 7px;
+    min-width: 32px;
+    min-height: 32px;
+    box-shadow: none;
+    outline: none;
+    transition: background-color 120ms ease;
+}
+
+.audio-toggle-btn:hover {
+    background-color: var(--white-08);
+}
+
+.audio-toggle-active {
+    background-color: var(--accent-18) !important;
+    border-color: var(--accent-45) !important;
+}
+
+.audio-icon {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 18px;
+    color: var(--fg-60);
+}
+
+.audio-toggle-active .audio-icon {
+    color: var(--accent);
+}
+
+.audio-dropdown {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    outline: none;
+    min-width: 120px;
+    max-width: 160px;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 11px;
+    color: var(--fg-75);
+}
+
+.audio-dropdown button {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 2px 4px;
+    border-radius: 6px;
+    color: var(--fg-75);
+    font-size: 11px;
+}
+
+.audio-dropdown button:hover {
+    background-color: var(--white-07);
+}
+
+.audio-sep {
+    margin: 4px 4px;
+    background-color: var(--white-08);
+    min-width: 1px;
+}
+
+/* ── Rangée basse (action + déclencheur) ──────────────────────────────── */
+.action-row {
+    padding: 4px 10px 12px 10px;
+    min-height: 72px;
+}
+
+/* Groupe type (photo / record) */
+.type-group {
+    border-radius: 12px;
+    background-color: var(--surface-60);
+    border: 1px solid var(--white-07);
+    padding: 4px;
+}
+
+.type-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    padding: 9px 13px;
+    min-width: 54px;
+    min-height: 54px;
+    box-shadow: none;
+    outline: none;
+    transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.type-btn:hover {
+    background-color: var(--white-08);
+}
+
+.type-btn:checked {
+    background-color: var(--accent-18);
+    border-color: var(--accent-50);
+}
+
+.type-icon {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 30px;
+    color: var(--fg-80);
+}
+
+.record-icon {
+    font-size: 48px;
+}
+
+.type-btn:checked .type-icon {
+    color: var(--accent);
+}
+
+/* ── Grand bouton déclencheur ──────────────────────────────────────────── */
+.trigger-btn {
+    background-color: var(--fg);
+    border-radius: 50px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    min-width: 68px;
+    min-height: 68px;
+    padding: 0;
+    margin-left: 4px;
+    transition: background-color 120ms ease, box-shadow 120ms ease;
+    outline: none;
+}
+
+.trigger-btn:hover {
+    background-color: #ffffff;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.55);
+}
+
+.trigger-btn:active {
+    background-color: var(--fg-80);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.trigger-icon {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 38px;
+    color: var(--bg-dark);
+}
+
+/* Compte à rebours */
+.countdown-label {
+    font-family: "Ubuntu", sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--bg-dark);
+}
