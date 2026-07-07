@@ -1,22 +1,46 @@
--- Workspaces 1-5 : laptop (eDP-1)
-for i = 1, 5 do
-    hl.workspace_rule({
-        workspace  = tostring(i),
-        persistent = true,
-        monitor    = "eDP-1",
-        default    = (i == 1),
-    })
+-- Détection dynamique des moniteurs physiquement connectés
+local function get_active_monitors()
+    local monitors = {}
+    -- On interroge le kernel pour savoir quels écrans sont branchés (même avant que Hyprland soit totalement lancé)
+    local handle = io.popen("for f in /sys/class/drm/*/status; do if [ \"$(cat $f 2>/dev/null)\" = \"connected\" ]; then echo $f; fi; done")
+    if handle then
+        local result = handle:read("*a")
+        handle:close()
+        for line in result:gmatch("[^\r\n]+") do
+            -- Extrait "eDP-1" de "/sys/class/drm/card1-eDP-1/status"
+            local mon = line:match("card%d+-(.-)/status")
+            if mon then
+                table.insert(monitors, mon)
+            end
+        end
+    end
+    -- Fallback si rien n'est détecté
+    if #monitors == 0 then
+        table.insert(monitors, "") 
+    end
+    return monitors
 end
 
--- Workspaces 6-10 : externe (HDMI-A-1)
-for i = 6, 10 do
-    hl.workspace_rule({
-        workspace  = tostring(i),
-        persistent = true,
-        monitor    = "HDMI-A-1",
-        default    = (i == 6),
-    })
+local active_monitors = get_active_monitors()
+
+-- Assigne 5 workspaces persistants pour chaque moniteur connecté
+for m_idx, mon in ipairs(active_monitors) do
+    local start_ws = (m_idx - 1) * 5 + 1
+    local end_ws = m_idx * 5
+    
+    for i = start_ws, end_ws do
+        local rule = {
+            workspace  = tostring(i),
+            persistent = true,
+            default    = (i == start_ws),
+        }
+        if mon ~= "" then
+            rule.monitor = mon
+        end
+        hl.workspace_rule(rule)
+    end
 end
+
 
 
 -- Satty (screenshot annotation)
