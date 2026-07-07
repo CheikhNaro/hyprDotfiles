@@ -1,5 +1,5 @@
 # wallust configuration file
-backend = "fastkmeans"
+backend = "fastresize"
 color_space = "lab"
 palette = "dark"
 check_contrast = true
