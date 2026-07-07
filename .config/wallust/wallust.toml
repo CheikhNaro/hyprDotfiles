@@ -1,0 +1,15 @@
+# wallust configuration file
+backend = "fastkmeans"
+color_space = "lab"
+palette = "dark"
+check_contrast = true
+
+[templates]
+gtk3 = { template = "gtk3.css", target = "~/.config/gtk-3.0/colors.css" }
+gtk4 = { template = "gtk4.css", target = "~/.config/gtk-4.0/colors.css" }
+rofi = { template = "rofi.rasi", target = "~/.config/rofi/colors.rasi" }
+hyprlock = { template = "hyprlock.conf", target = "~/.config/hypr/hyprlock/colors.conf" }
+sddm = { template = "sddm.conf", target = "~/.config/sddm-theme/theme.conf" }
+hypremoji = { template = "hypremoji.css", target = "~/.config/hypremoji/style.css" }
+screenshot = { template = "screenshot-palette.css", target = "~/.config/hypr/screenshot-palette/style.css" }
+json = { template = "colors.json", target = "~/.cache/wallust/colors.json" }

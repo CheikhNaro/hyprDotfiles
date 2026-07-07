@@ -16,20 +16,20 @@ import subprocess
 
 # ── Lecture de l'entrée JSON ────────────────────────────────────────────────
 data = json.load(sys.stdin)
-colors = data['colors']
+colors = data.get('colors', {})
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 def hex_to_rgb(h: str) -> tuple[int, int, int]:
-    h = h.lstrip('#')
+    h = str(h).lstrip('#')
     if len(h) >= 6:
         return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
     return (0, 0, 0)
 
 def color_get(key: str, fallback: str) -> str:
-    return colors.get(key, {}).get('default', {}).get('color', fallback)
+    return colors.get(key, fallback)
 
 # ── Couleur primaire ─────────────────────────────────────────────────────────
-primary_hex = color_get('primary', '#5585c8')
+primary_hex = color_get('color4', '#5585c8')
 target_rgb  = hex_to_rgb(primary_hex)
 
 import colorsys
@@ -109,15 +109,15 @@ snappy_config = os.path.expanduser('~/.config/snappy-switcher/config.ini')
 
 if os.path.isdir(os.path.dirname(snappy_theme)):
     try:
-        bg           = color_get('background',            '#1e1e2e')
-        surface      = color_get('surface',               '#181825')
-        surface_high = color_get('surface_container_high','#313244')
-        primary      = color_get('primary',               '#cba6f7')
-        on_surface   = color_get('on_surface',            '#cdd6f4')
-        on_surf_var  = color_get('on_surface_variant',    '#bac2de')
-        secondary    = color_get('secondary',             '#f5e0dc')
-        on_secondary = color_get('on_secondary',          '#11111b')
-        on_primary   = color_get('on_primary',            '#11111b')
+        bg           = color_get('background', '#1e1e2e')
+        surface      = color_get('color0',     '#181825')
+        surface_high = color_get('color8',     '#313244')
+        primary      = color_get('color4',     '#cba6f7')
+        on_surface   = color_get('foreground', '#cdd6f4')
+        on_surf_var  = color_get('color7',     '#bac2de')
+        secondary    = color_get('color6',     '#f5e0dc')
+        on_secondary = color_get('background', '#11111b')
+        on_primary   = color_get('background', '#11111b')
 
         theme_content = (
             f"[colors]\n"

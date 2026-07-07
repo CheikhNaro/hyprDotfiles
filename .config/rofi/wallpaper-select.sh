@@ -32,8 +32,8 @@ if [ "$1" = "--list" ]; then
         (
             ~/.cargo/bin/wayle wallpaper set "$WALLPAPER_PATH"
             sleep 0.2
-            matugen image "$WALLPAPER_PATH" --prefer saturation
-            MATUGEN_JSON="$(matugen image "$WALLPAPER_PATH" --prefer saturation --json hex)"
+            wallust run "$WALLPAPER_PATH"
+            WALLUST_JSON="$(cat ~/.cache/wallust/colors.json)"
             cp "$WALLPAPER_PATH" "/usr/share/sddm/themes/pixie/assets/background.jpg" 2>/dev/null
             cp "$HOME/.config/sddm-theme/theme.conf" "/usr/share/sddm/themes/pixie/theme.conf" 2>/dev/null
             gen_missing_thumbs
@@ -42,8 +42,8 @@ if [ "$1" = "--list" ]; then
             pkill swayosd-server; swayosd-server &
             nautilus -q
             magick "$WALLPAPER_PATH" -resize 1920x1080^ -quality 85 "$HOME/.cache/wlogout-bg.jpg" 2>/dev/null
-            echo "$MATUGEN_JSON" | ~/.config/rofi/update-wayle-palette.py "$HOME/.cache/wlogout-bg.jpg"
-            echo "$MATUGEN_JSON" | python3 ~/.config/hypr/scripts/generate-hyprtoolkit.py
+            echo "$WALLUST_JSON" | ~/.config/rofi/update-wayle-palette.py "$HOME/.cache/wlogout-bg.jpg"
+            echo "$WALLUST_JSON" | python3 ~/.config/hypr/scripts/generate-hyprtoolkit.py
         ) </dev/null >/dev/null 2>&1 & disown
     fi
 

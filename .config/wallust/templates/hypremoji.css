@@ -1,17 +1,17 @@
 /* Definition of variables */
 :root {
-  --primary-col: {{colors.primary.default.hex}};
-  --primary-col-glow: {{colors.primary.default.hex}}aa;
-  --gray: {{colors.outline.default.hex}};
+  --primary-col: {{color4}};
+  --primary-col-glow: {{color4}}aa;
+  --gray: {{color8}};
 
-  --bg-col: {{colors.surface.default.hex}};
-  --input-text-col: {{colors.on_surface.default.hex}};
-  --btn-list-col: {{colors.surface_container.default.hex}};
-  --btn-list-col-hover: {{colors.surface_container_high.default.hex}};
-  --btn-list-col-hover-glow: {{colors.surface_container_high.default.hex}}77;
-  --btn-nav-col: {{colors.surface_variant.default.hex}};
-  --btn-nav-col-hover: {{colors.surface.default.hex}};
-  --error: {{colors.error.default.hex}};
+  --bg-col: {{color0}};
+  --input-text-col: {{foreground}};
+  --btn-list-col: {{color0}};
+  --btn-list-col-hover: {{color8}};
+  --btn-list-col-hover-glow: {{color8}}77;
+  --btn-nav-col: {{color8}};
+  --btn-nav-col-hover: {{color0}};
+  --error: {{color1}};
 
   --emoji-font: "Noto Color Emoji";
 }

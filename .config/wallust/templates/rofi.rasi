@@ -1,0 +1,8 @@
+/* Fichier généré automatiquement par Matugen */
+* {
+    bg:      {{background}}FA;
+    bg-alt:  {{color8}};
+    fg:      {{foreground}};
+    accent:  {{color4}};
+    urgent:  {{color1}};
+}

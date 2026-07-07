@@ -3,38 +3,38 @@
    ─────────────────────────────────────────────────────────────────────── */
 
 :root {
-    --bg-dark: {{colors.background.default.hex}};
-    --bg-surface: {{colors.surface_container.default.hex}};
-    --fg: {{colors.on_surface.default.hex}};
-    --accent: {{colors.primary.default.hex}};
+    --bg-dark: {{background}};
+    --bg-surface: {{color0}};
+    --fg: {{foreground}};
+    --accent: {{color4}};
     
     /* Variables avec opacité (Hex alpha) */
-    --accent-0: {{colors.primary.default.hex}}00;
-    --accent-16: {{colors.primary.default.hex}}29;
-    --accent-18: {{colors.primary.default.hex}}2e;
-    --accent-20: {{colors.primary.default.hex}}33;
-    --accent-22: {{colors.primary.default.hex}}38;
-    --accent-45: {{colors.primary.default.hex}}73;
-    --accent-50: {{colors.primary.default.hex}}80;
-    --accent-55: {{colors.primary.default.hex}}8c;
+    --accent-0: {{color4}}00;
+    --accent-16: {{color4}}29;
+    --accent-18: {{color4}}2e;
+    --accent-20: {{color4}}33;
+    --accent-22: {{color4}}38;
+    --accent-45: {{color4}}73;
+    --accent-50: {{color4}}80;
+    --accent-55: {{color4}}8c;
     
-    --fg-45: {{colors.on_surface.default.hex}}73;
-    --fg-55: {{colors.on_surface.default.hex}}8c;
-    --fg-60: {{colors.on_surface.default.hex}}99;
-    --fg-65: {{colors.on_surface.default.hex}}a6;
-    --fg-75: {{colors.on_surface.default.hex}}bf;
-    --fg-80: {{colors.on_surface.default.hex}}cc;
-    --fg-85: {{colors.on_surface.default.hex}}d9;
-    --fg-90: {{colors.on_surface.default.hex}}e6;
+    --fg-45: {{foreground}}73;
+    --fg-55: {{foreground}}8c;
+    --fg-60: {{foreground}}99;
+    --fg-65: {{foreground}}a6;
+    --fg-75: {{foreground}}bf;
+    --fg-80: {{foreground}}cc;
+    --fg-85: {{foreground}}d9;
+    --fg-90: {{foreground}}e6;
 
     --white-06: #ffffff0f;
     --white-07: #ffffff12;
     --white-08: #ffffff14;
     --white-10: #ffffff1a;
     
-    --surface-55: {{colors.surface_container_high.default.hex}}8c;
-    --surface-60: {{colors.surface_container_high.default.hex}}99;
-    --surface-70: {{colors.surface_container_high.default.hex}}b3;
+    --surface-55: {{color8}}8c;
+    --surface-60: {{color8}}99;
+    --surface-70: {{color8}}b3;
 }
 
 /* Fenêtre principale */

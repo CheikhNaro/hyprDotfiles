@@ -1,8 +1,0 @@
-/* Fichier généré automatiquement par Matugen */
-* {
-    bg:      {{colors.background.default.hex}}FA;
-    bg-alt:  {{colors.surface_container_high.default.hex}};
-    fg:      {{colors.on_background.default.hex}};
-    accent:  {{colors.primary.default.hex}};
-    urgent:  {{colors.error.default.hex}};
-}
