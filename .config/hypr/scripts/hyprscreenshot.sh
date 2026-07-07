@@ -90,26 +90,7 @@ _build_audio_args() {
     echo "$args"
 }
 
-# Construit les arguments codec pour wf-recorder
-# Pour GIF : pas de codec vidéo, muxer gif
-# Pour MP4/MKV : VAAPI si disponible, sinon libx264/libx265
-_build_codec_args() {
-    local outfile="$1"
-    local args=""
-
-    if [ "$FMT" = "gif" ]; then
-        # GIF : pas de codec matériel possible, on force le muxer
-        args="-c gif -m gif"
-    elif [ -e "$VAAPI_DEVICE" ]; then
-        # Hardware encoding VAAPI (Intel)
-        args="-c ${VAAPI_CODEC} -d ${VAAPI_DEVICE}"
-    else
-        # Fallback logiciel
-        args="-c libx264 -p crf=23"
-    fi
-
-    echo "$args"
-}
+# Removed _build_codec_args as we use arrays directly below
 
 # ---------------------------------------------------------------------------
 # Capture d'écran → satty (annotation + copier/enregistrer)
@@ -152,16 +133,33 @@ do_record() {
     local outfile="$VIDEODIR/recording-$TIMESTAMP.${FMT}"
     local audio_args
     audio_args=$(_build_audio_args)
-    local codec_args
-    codec_args=$(_build_codec_args "$outfile")
 
     sleep 0.25
 
     _launch_recorder() {
-        local geo_arg="$1"
-        local out_arg="$2"
-        # shellcheck disable=SC2086
-        wf-recorder $geo_arg $audio_args $codec_args -f "$out_arg" &
+        local geo_opt="$1"
+        local geo_val="$2"
+        local cmd=(wf-recorder)
+
+        if [ "$geo_opt" != "none" ]; then
+            cmd+=("$geo_opt" "$geo_val")
+        fi
+
+        if [ -n "$audio_args" ]; then
+            cmd+=("$audio_args")
+        fi
+
+        if [ "$FMT" = "gif" ]; then
+            cmd+=("-c" "gif" "-m" "gif")
+        elif [ -e "$VAAPI_DEVICE" ]; then
+            cmd+=("-c" "$VAAPI_CODEC" "-d" "$VAAPI_DEVICE")
+        else
+            cmd+=("-c" "libx264" "-p" "crf=23")
+        fi
+
+        cmd+=("-f" "$outfile")
+
+        "${cmd[@]}" &
         echo $! > "$PIDFILE"
     }
 
@@ -169,23 +167,23 @@ do_record() {
         region)
             local geom
             geom=$(slurp $SLURP_ARGS) || exit 0
-            _launch_recorder "-g \"$geom\"" "$outfile"
+            _launch_recorder "-g" "$geom"
             _notify_record "Région sélectionnée"
             ;;
         screen)
             local mon
             mon=$(_active_monitor)
             if [ -n "$mon" ] && [ "$mon" != "null" ]; then
-                _launch_recorder "-o \"$mon\"" "$outfile"
+                _launch_recorder "-o" "$mon"
             else
-                _launch_recorder "" "$outfile"
+                _launch_recorder "none" ""
             fi
             _notify_record "Plein écran"
             ;;
         window)
             local geom
             geom=$(_window_geom)
-            _launch_recorder "-g \"$geom\"" "$outfile"
+            _launch_recorder "-g" "$geom"
             _notify_record "Fenêtre active"
             ;;
     esac
