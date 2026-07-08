@@ -28,3 +28,8 @@ output_path = '~/.config/hypremoji/style.css'
 [templates.screenshot-palette]
 input_path = '~/.config/matugen/templates/screenshot-palette.css'
 output_path = '~/.config/hypr/screenshot-palette/style.css'
+
+[templates.eww]
+input_path = '~/.config/matugen/templates/eww-colors.scss'
+output_path = '~/.config/eww/colors.scss'
+

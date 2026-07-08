@@ -1,12 +1,47 @@
-/* ─── HyprScreenshot Palette v2 ───────────────────────────────────────────
-   bg: #1e1b12  |  bg-alt: #2d2a21  |  fg: #e9e2d4  |  accent: #e0c56d
+/* ─── HyprScreenshot Palette v2 — Matugen ──────────────────────────────────
+   Généré automatiquement par Matugen 
    ─────────────────────────────────────────────────────────────────────── */
+
+:root {
+    --bg-dark: #16130b;
+    --bg-surface: #221f17;
+    --fg: #e9e2d4;
+    --accent: #e0c56d;
+    
+    /* Variables avec opacité (Hex alpha) */
+    --accent-0: #e0c56d00;
+    --accent-16: #e0c56d29;
+    --accent-18: #e0c56d2e;
+    --accent-20: #e0c56d33;
+    --accent-22: #e0c56d38;
+    --accent-45: #e0c56d73;
+    --accent-50: #e0c56d80;
+    --accent-55: #e0c56d8c;
+    
+    --fg-45: #e9e2d473;
+    --fg-55: #e9e2d48c;
+    --fg-60: #e9e2d499;
+    --fg-65: #e9e2d4a6;
+    --fg-75: #e9e2d4bf;
+    --fg-80: #e9e2d4cc;
+    --fg-85: #e9e2d4d9;
+    --fg-90: #e9e2d4e6;
+
+    --white-06: #ffffff0f;
+    --white-07: #ffffff12;
+    --white-08: #ffffff14;
+    --white-10: #ffffff1a;
+    
+    --surface-55: #2d2a218c;
+    --surface-60: #2d2a2199;
+    --surface-70: #2d2a21b3;
+}
 
 /* Fenêtre principale */
 .palette-window {
-    background-color: #1e1b12;
+    background-color: var(--bg-dark);
     border-radius: 20px;
-    border: 1px solid rgba(224, 197, 109, 0.22);
+    border: 1px solid var(--accent-22);
 }
 
 .root-box {
@@ -38,19 +73,19 @@
 }
 
 .mode-btn:hover {
-    background-color: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.10);
+    background-color: var(--white-07);
+    border-color: var(--white-10);
 }
 
 .mode-btn:checked {
-    background-color: rgba(224, 197, 109, 0.16);
-    border-color: rgba(224, 197, 109, 0.55);
+    background-color: var(--accent-16);
+    border-color: var(--accent-55);
 }
 
 .mode-icon {
     font-family: "JetBrainsMono Nerd Font";
     font-size: 34px;
-    color: rgba(233, 226, 212, 0.85);
+    color: var(--fg-85);
     margin-bottom: 1px;
 }
 
@@ -63,25 +98,25 @@
 }
 
 .mode-btn:checked .mode-icon {
-    color: #e0c56d;
+    color: var(--accent);
 }
 
 .mode-label {
     font-family: "Ubuntu", sans-serif;
     font-size: 11px;
-    color: rgba(233, 226, 212, 0.55);
+    color: var(--fg-55);
     letter-spacing: 0.3px;
 }
 
 .mode-btn:checked .mode-label {
-    color: rgba(224, 197, 109, 0.85);
+    color: var(--fg-85);
 }
 
 /* ── Section options enregistrement ────────────────────────────────────── */
 .rec-options-section {
     background-color: rgba(0, 0, 0, 0.18);
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid var(--white-06);
+    border-bottom: 1px solid var(--white-06);
     padding: 6px 10px;
 }
 
@@ -93,7 +128,7 @@
 .options-label {
     font-family: "Ubuntu", sans-serif;
     font-size: 10px;
-    color: rgba(233, 226, 212, 0.45);
+    color: var(--fg-45);
     letter-spacing: 0.5px;
     text-transform: uppercase;
 }
@@ -101,8 +136,8 @@
 /* Groupe de boutons format / timer */
 .fmt-group {
     border-radius: 8px;
-    background-color: rgba(45, 42, 33, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background-color: var(--surface-70);
+    border: 1px solid var(--white-07);
     padding: 2px;
 }
 
@@ -116,19 +151,19 @@
     outline: none;
     font-family: "Ubuntu", sans-serif;
     font-size: 11px;
-    color: rgba(233, 226, 212, 0.65);
+    color: var(--fg-65);
     transition: background-color 100ms ease;
 }
 
 .fmt-btn:hover {
-    background-color: rgba(255, 255, 255, 0.07);
-    color: rgba(233, 226, 212, 0.90);
+    background-color: var(--white-07);
+    color: var(--fg-90);
 }
 
 .fmt-btn:checked {
-    background-color: rgba(224, 197, 109, 0.20);
-    border-color: rgba(224, 197, 109, 0.45);
-    color: #e0c56d;
+    background-color: var(--accent-20);
+    border-color: var(--accent-45);
+    color: var(--accent);
 }
 
 /* Rangée Audio */
@@ -139,8 +174,8 @@
 
 .audio-device-box {
     border-radius: 10px;
-    background-color: rgba(45, 42, 33, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background-color: var(--surface-55);
+    border: 1px solid var(--white-07);
     padding: 3px;
 }
 
@@ -157,22 +192,22 @@
 }
 
 .audio-toggle-btn:hover {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--white-08);
 }
 
 .audio-toggle-active {
-    background-color: rgba(224, 197, 109, 0.18) !important;
-    border-color: rgba(224, 197, 109, 0.45) !important;
+    background-color: var(--accent-18) !important;
+    border-color: var(--accent-45) !important;
 }
 
 .audio-icon {
     font-family: "JetBrainsMono Nerd Font";
     font-size: 18px;
-    color: rgba(233, 226, 212, 0.60);
+    color: var(--fg-60);
 }
 
 .audio-toggle-active .audio-icon {
-    color: #e0c56d;
+    color: var(--accent);
 }
 
 .audio-dropdown {
@@ -184,7 +219,7 @@
     max-width: 160px;
     font-family: "Ubuntu", sans-serif;
     font-size: 11px;
-    color: rgba(233, 226, 212, 0.75);
+    color: var(--fg-75);
 }
 
 .audio-dropdown button {
@@ -193,17 +228,17 @@
     box-shadow: none;
     padding: 2px 4px;
     border-radius: 6px;
-    color: rgba(233, 226, 212, 0.75);
+    color: var(--fg-75);
     font-size: 11px;
 }
 
 .audio-dropdown button:hover {
-    background-color: rgba(255, 255, 255, 0.07);
+    background-color: var(--white-07);
 }
 
 .audio-sep {
     margin: 4px 4px;
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--white-08);
     min-width: 1px;
 }
 
@@ -216,8 +251,8 @@
 /* Groupe type (photo / record) */
 .type-group {
     border-radius: 12px;
-    background-color: rgba(45, 42, 33, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background-color: var(--surface-60);
+    border: 1px solid var(--white-07);
     padding: 4px;
 }
 
@@ -234,18 +269,18 @@
 }
 
 .type-btn:hover {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--white-08);
 }
 
 .type-btn:checked {
-    background-color: rgba(224, 197, 109, 0.18);
-    border-color: rgba(224, 197, 109, 0.5);
+    background-color: var(--accent-18);
+    border-color: var(--accent-50);
 }
 
 .type-icon {
     font-family: "JetBrainsMono Nerd Font";
     font-size: 30px;
-    color: rgba(233, 226, 212, 0.80);
+    color: var(--fg-80);
 }
 
 .record-icon {
@@ -253,12 +288,12 @@
 }
 
 .type-btn:checked .type-icon {
-    color: #e0c56d;
+    color: var(--accent);
 }
 
 /* ── Grand bouton déclencheur ──────────────────────────────────────────── */
 .trigger-btn {
-    background-color: #e9e2d4;
+    background-color: var(--fg);
     border-radius: 50px;
     border: none;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
@@ -276,14 +311,14 @@
 }
 
 .trigger-btn:active {
-    background-color: rgba(233, 226, 212, 0.80);
+    background-color: var(--fg-80);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .trigger-icon {
     font-family: "JetBrainsMono Nerd Font";
     font-size: 38px;
-    color: #16130b;
+    color: var(--bg-dark);
 }
 
 /* Compte à rebours */
@@ -291,5 +326,5 @@
     font-family: "Ubuntu", sans-serif;
     font-size: 28px;
     font-weight: bold;
-    color: #16130b;
+    color: var(--bg-dark);
 }

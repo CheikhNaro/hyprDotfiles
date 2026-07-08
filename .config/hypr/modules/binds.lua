@@ -50,7 +50,7 @@ hl.bind(mainMod .. " + f", function()
     else
         -- Passage en floating : centrage + taille confortable
         local m = hl.get_active_monitor()
-        hl.dispatch(hl.dsp.window.resize({ x = math.floor(m.width * 0.75), y = math.floor(m.height * 0.7) }))
+        hl.dispatch(hl.dsp.window.resize({ x = math.floor(m.width * 0.60), y = math.floor(m.height * 0.5) }))
         hl.dispatch(hl.dsp.window.center())
     end
 end)
@@ -142,8 +142,8 @@ hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tru
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
 -- Capture d'écran & Enregistrement — menu style GNOME
--- PrtScr : ouvre le menu (ou arrête l'enregistrement en cours)
-hl.bind("Print", hl.dsp.exec_cmd("bash -c '$HOME/.config/hypr/scripts/hyprscreenshot.sh'"))
+-- Super + PrtScr : ouvre la palette d'outil de capture
+hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/hyprscreenshot.sh"))
 
 -- Emoji picker (HyprEmoji)
 hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("~/.local/bin/hypremoji"))

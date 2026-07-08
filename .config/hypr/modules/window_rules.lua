@@ -2,7 +2,8 @@
 local function get_active_monitors()
     local monitors = {}
     -- On interroge le kernel pour savoir quels écrans sont branchés (même avant que Hyprland soit totalement lancé)
-    local handle = io.popen("for f in /sys/class/drm/*/status; do if [ \"$(cat $f 2>/dev/null)\" = \"connected\" ]; then echo $f; fi; done")
+    local handle = io.popen(
+    "for f in /sys/class/drm/*/status; do if [ \"$(cat $f 2>/dev/null)\" = \"connected\" ]; then echo $f; fi; done")
     if handle then
         local result = handle:read("*a")
         handle:close()
@@ -16,7 +17,7 @@ local function get_active_monitors()
     end
     -- Fallback si rien n'est détecté
     if #monitors == 0 then
-        table.insert(monitors, "") 
+        table.insert(monitors, "")
     end
     return monitors
 end
@@ -27,7 +28,7 @@ local active_monitors = get_active_monitors()
 for m_idx, mon in ipairs(active_monitors) do
     local start_ws = (m_idx - 1) * 5 + 1
     local end_ws = m_idx * 5
-    
+
     for i = start_ws, end_ws do
         local rule = {
             workspace  = tostring(i),
@@ -97,6 +98,15 @@ hl.window_rule({
 hl.window_rule({
     name            = "float-calculator",
     match           = { initial_class = "org.gnome.Calculator" },
+    float           = true,
+    center          = true,
+    persistent_size = true,
+    suppress_event  = "maximize",   -- empêche la calculatrice de s'ouvrir maximisée
+    size            = { 420, 600 }, -- taille flottante par défaut
+})
+hl.window_rule({
+    name            = "float-horloge",
+    match           = { initial_class = "org.gnome.clocks" },
     float           = true,
     center          = true,
     persistent_size = true,

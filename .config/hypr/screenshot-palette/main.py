@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 """
-HyprScreenshot Palette v2 — Style GNOME Screenshot Tool
+HyprScreenshot Palette v2 — Kooha Workflow
 GTK4 + libadwaita, positionnée bas-centre via gtk4-layer-shell
-
-Sortie stdout (JSON) : {"mode":"region","action":"screenshot","format":"mp4",
-                        "audio_sink":true,"audio_mic":false,
-                        "mic_device":"...","sink_device":"...","delay":0}
 """
-import gi, subprocess, json, os, threading
+import gi, json, os, subprocess
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 gi.require_version('Gtk4LayerShell', '1.0')
@@ -20,100 +16,35 @@ ICON_WINDOW   = "\U000f10ac"
 ICON_PHOTO    = "\ueb4c"
 ICON_RECORD   = "\U000f044b"
 ICON_TRIGGER  = "\U000f044a"
-ICON_MIC_ON   = "\U000f0764"   # nf-md-microphone
-ICON_MIC_OFF  = "\U000f0766"   # nf-md-microphone-off
-ICON_SPK_ON   = "\U000f057e"   # nf-md-volume-high
-ICON_SPK_OFF  = "\U000f0581"   # nf-md-volume-off
-ICON_TIMER    = "\U000f0954"   # nf-md-timer-outline
-ICON_CHEVRON  = "\U000f0140"   # nf-md-chevron-down
+ICON_MIC      = "\uec1c"
+ICON_SPK      = "\uf028"
 
 CSS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "style.css")
 
-
-def _get_pw_sources():
-    """Retourne la liste des sources et sinks PipeWire via pw-cli."""
-    sources, sinks = [], []
+def _get_default_audio_devices():
+    mic = None
+    spk = None
     try:
-        out = subprocess.check_output(
-            ["pw-cli", "ls", "Node"], text=True, stderr=subprocess.DEVNULL)
-        current = {}
-        for line in out.splitlines():
-            line = line.strip()
-            if line.startswith("id "):
-                if current.get("media.class") in ("Audio/Source", "Audio/Sink"):
-                    entry = {
-                        "name": current.get("node.name", ""),
-                        "desc": current.get("node.description", current.get("node.name", "?")),
-                    }
-                    if current["media.class"] == "Audio/Source":
-                        sources.append(entry)
-                    else:
-                        sinks.append(entry)
-                current = {}
-            elif " = " in line:
-                k, _, v = line.partition(" = ")
-                k = k.strip().strip('"')
-                v = v.strip().strip('"')
-                current[k] = v
-        # flush dernière entrée
-        if current.get("media.class") in ("Audio/Source", "Audio/Sink"):
-            entry = {
-                "name": current.get("node.name", ""),
-                "desc": current.get("node.description", current.get("node.name", "?")),
-            }
-            if current["media.class"] == "Audio/Source":
-                sources.append(entry)
-            else:
-                sinks.append(entry)
+        mic = subprocess.check_output(["pactl", "get-default-source"], text=True).strip()
+        spk = subprocess.check_output(["pactl", "get-default-sink"], text=True).strip() + ".monitor"
     except Exception:
         pass
-    return sources, sinks
-
+    return mic, spk
 
 class ScreenshotPalette(Adw.Application):
     def __init__(self):
         super().__init__(application_id="com.hypr.screenshot-palette")
         self.connect("activate", self._on_activate)
-        self.mode       = "region"
-        self.action     = "screenshot"
-        self.fmt        = "mp4"
-        self.audio_mic  = False
-        self.audio_sink = False
-        self.mic_device  = ""
-        self.sink_device = ""
-        self.delay      = 0
-        self._countdown_label = None
-        self._countdown_val   = 0
-
-        # Récupérer les devices audio en arrière-plan
-        self._sources, self._sinks = [], []
-        threading.Thread(target=self._load_audio_devices, daemon=True).start()
-
-    def _load_audio_devices(self):
-        srcs, snks = _get_pw_sources()
-        GLib.idle_add(self._apply_audio_devices, srcs, snks)
-
-    def _apply_audio_devices(self, srcs, snks):
-        self._sources = srcs
-        self._sinks   = snks
-        # Défaut = premier device trouvé
-        if srcs and not self.mic_device:
-            self.mic_device = srcs[0]["name"]
-        if snks and not self.sink_device:
-            self.sink_device = snks[0]["name"]
-        self._update_audio_menus()
-
-    def _update_audio_menus(self):
-        """Recharge les menus dropdowns audio une fois les devices connus."""
-        if not hasattr(self, "_mic_dropdown") or not hasattr(self, "_sink_dropdown"):
-            return
-        # Microphone
-        mic_model = Gtk.StringList.new([d["desc"] for d in self._sources] or ["Aucun"])
-        self._mic_dropdown.set_model(mic_model)
-        # Sortie système (monitor)
-        sink_names = [f"{d['desc']} (monitor)" for d in self._sinks] or ["Aucun"]
-        sink_model = Gtk.StringList.new(sink_names)
-        self._sink_dropdown.set_model(sink_model)
+        self.mode        = "region"
+        self.action      = "screenshot"
+        self.fmt         = "mp4"
+        self.delay       = 0
+        self.fps         = 60
+        self.use_mic     = False
+        self.use_spk     = False
+        self.def_mic, self.def_spk = _get_default_audio_devices()
+        
+        self._countdown_val = 0
 
     # ── Initialisation ─────────────────────────────────────────────────────
     def _on_activate(self, app):
@@ -156,9 +87,9 @@ class ScreenshotPalette(Adw.Application):
         self.win.set_child(root)
 
         # ── 1. Rangée modes (Area / Screen / Window) ───────────────────────
-        mode_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
-        mode_row.add_css_class("mode-row")
-        root.append(mode_row)
+        self.mode_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+        self.mode_row.add_css_class("mode-row")
+        root.append(self.mode_row)
 
         modes = [
             ("region", ICON_REGION, "Area"),
@@ -186,120 +117,76 @@ class ScreenshotPalette(Adw.Application):
             vbox.append(lbl_text)
             btn.set_child(vbox)
             btn.connect("toggled", self._on_mode, key)
-            mode_row.append(btn)
+            self.mode_row.append(btn)
             self._mode_btns[key] = btn
             prev = btn
 
-        # ── 2. Rangée options enregistrement (cachée si screenshot) ────────
-        self._rec_options_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        # ── 2. Options d'enregistrement (Kooha Workflow) ────────
+        self._rec_options_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
         self._rec_options_row.add_css_class("rec-options-section")
         self._rec_options_row.set_visible(self.action == "record")
         root.append(self._rec_options_row)
 
-        # 2a. Format + Timer
-        fmt_timer_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
-        fmt_timer_row.add_css_class("fmt-timer-row")
-        self._rec_options_row.append(fmt_timer_row)
-
-        # Sélecteur de format
-        fmt_label = Gtk.Label(label="Format")
-        fmt_label.add_css_class("options-label")
-        fmt_timer_row.append(fmt_label)
-
-        fmt_group = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=2)
-        fmt_group.add_css_class("fmt-group")
-        self._fmt_btns = {}
-        prev_f = None
-        for fmt in ["mp4", "mkv", "gif"]:
-            b = Gtk.ToggleButton(group=prev_f, label=fmt.upper())
-            b.add_css_class("fmt-btn")
-            if fmt == self.fmt:
-                b.set_active(True)
-            b.connect("toggled", self._on_fmt, fmt)
-            fmt_group.append(b)
-            self._fmt_btns[fmt] = b
-            prev_f = b
-        fmt_timer_row.append(fmt_group)
-
-        # Spacer
-        sp1 = Gtk.Box()
-        sp1.set_hexpand(True)
-        fmt_timer_row.append(sp1)
-
-        # Timer
-        timer_label = Gtk.Label(label="Delay")
-        timer_label.add_css_class("options-label")
-        fmt_timer_row.append(timer_label)
-
-        timer_group = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=2)
-        timer_group.add_css_class("fmt-group")
-        self._timer_btns = {}
-        prev_d = None
-        for delay, lbl in [(0, "0s"), (3, "3s"), (5, "5s")]:
-            b = Gtk.ToggleButton(group=prev_d, label=lbl)
-            b.add_css_class("fmt-btn")
-            if delay == self.delay:
-                b.set_active(True)
-            b.connect("toggled", self._on_delay, delay)
-            timer_group.append(b)
-            self._timer_btns[delay] = b
-            prev_d = b
-        fmt_timer_row.append(timer_group)
-
-        # 2b. Audio row
-        audio_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
-        audio_row.add_css_class("audio-row")
+        # 2a. Audio Toggles
+        audio_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+        audio_row.set_halign(Gtk.Align.CENTER)
         self._rec_options_row.append(audio_row)
 
-        # -- Micro toggle + dropdown
-        mic_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
-        mic_box.add_css_class("audio-device-box")
+        self.btn_mic = Gtk.ToggleButton(label=f"{ICON_MIC} Mic")
+        self.btn_mic.add_css_class("fmt-btn")
+        self.btn_mic.connect("toggled", self._on_mic_toggle)
+        audio_row.append(self.btn_mic)
 
-        self._mic_toggle = Gtk.ToggleButton()
-        self._mic_toggle.add_css_class("audio-toggle-btn")
-        lbl_mic = Gtk.Label(label=ICON_MIC_ON)
-        lbl_mic.add_css_class("audio-icon")
-        self._mic_lbl = lbl_mic
-        self._mic_toggle.set_child(lbl_mic)
-        self._mic_toggle.set_active(self.audio_mic)
-        self._mic_toggle.connect("toggled", self._on_mic_toggle)
-        mic_box.append(self._mic_toggle)
+        self.btn_spk = Gtk.ToggleButton(label=f"{ICON_SPK} Speaker")
+        self.btn_spk.add_css_class("fmt-btn")
+        self.btn_spk.connect("toggled", self._on_spk_toggle)
+        audio_row.append(self.btn_spk)
 
-        self._mic_dropdown = Gtk.DropDown()
-        self._mic_dropdown.add_css_class("audio-dropdown")
-        self._mic_dropdown.set_sensitive(self.audio_mic)
-        self._mic_dropdown.connect("notify::selected", self._on_mic_selected)
-        mic_box.append(self._mic_dropdown)
-        audio_row.append(mic_box)
+        # 2b. Format & FPS
+        fmt_fps_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+        fmt_fps_row.set_halign(Gtk.Align.CENTER)
+        self._rec_options_row.append(fmt_fps_row)
+        
+        fmt_group = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=2)
+        fmt_group.add_css_class("fmt-group")
+        prev_f = None
+        for fmt in ["mp4", "mkv", "webm", "gif"]:
+            b = Gtk.ToggleButton(group=prev_f, label=fmt.upper())
+            b.add_css_class("fmt-btn")
+            if fmt == self.fmt: b.set_active(True)
+            b.connect("toggled", self._on_fmt, fmt)
+            fmt_group.append(b)
+            prev_f = b
+        fmt_fps_row.append(fmt_group)
 
-        # Séparateur vertical
-        sep = Gtk.Separator(orientation=Gtk.Orientation.VERTICAL)
-        sep.add_css_class("audio-sep")
-        audio_row.append(sep)
+        fps_group = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=2)
+        fps_group.add_css_class("fmt-group")
+        prev_fps = None
+        for fps in [30, 60]:
+            b = Gtk.ToggleButton(group=prev_fps, label=f"{fps}FPS")
+            b.add_css_class("fmt-btn")
+            if fps == self.fps: b.set_active(True)
+            b.connect("toggled", self._on_fps, fps)
+            fps_group.append(b)
+            prev_fps = b
+        fmt_fps_row.append(fps_group)
 
-        # -- Sortie audio toggle + dropdown
-        sink_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
-        sink_box.add_css_class("audio-device-box")
+        # 2c. Delay
+        delay_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+        delay_row.set_halign(Gtk.Align.CENTER)
+        self._rec_options_row.append(delay_row)
 
-        self._sink_toggle = Gtk.ToggleButton()
-        self._sink_toggle.add_css_class("audio-toggle-btn")
-        lbl_sink = Gtk.Label(label=ICON_SPK_ON)
-        lbl_sink.add_css_class("audio-icon")
-        self._sink_lbl = lbl_sink
-        self._sink_toggle.set_child(lbl_sink)
-        self._sink_toggle.set_active(self.audio_sink)
-        self._sink_toggle.connect("toggled", self._on_sink_toggle)
-        sink_box.append(self._sink_toggle)
-
-        self._sink_dropdown = Gtk.DropDown()
-        self._sink_dropdown.add_css_class("audio-dropdown")
-        self._sink_dropdown.set_sensitive(self.audio_sink)
-        self._sink_dropdown.connect("notify::selected", self._on_sink_selected)
-        sink_box.append(self._sink_dropdown)
-        audio_row.append(sink_box)
-
-        # Remplir les dropdowns si devices déjà chargés
-        self._update_audio_menus()
+        delay_group = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=2)
+        delay_group.add_css_class("fmt-group")
+        prev_d = None
+        for delay, lbl in [(0, "0s"), (3, "3s"), (5, "5s"), (10, "10s")]:
+            b = Gtk.ToggleButton(group=prev_d, label=lbl)
+            b.add_css_class("fmt-btn")
+            if delay == self.delay: b.set_active(True)
+            b.connect("toggled", self._on_delay, delay)
+            delay_group.append(b)
+            prev_d = b
+        delay_row.append(delay_group)
 
         # ── 3. Rangée basse : type + déclencheur ──────────────────────────
         action_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
@@ -353,45 +240,22 @@ class ScreenshotPalette(Adw.Application):
         if btn.get_active():
             self.action = key
             self._rec_options_row.set_visible(key == "record")
-            # Resize la fenêtre
             self.win.set_default_size(-1, -1)
 
     def _on_fmt(self, btn, fmt):
-        if btn.get_active():
-            self.fmt = fmt
+        if btn.get_active(): self.fmt = fmt
+
+    def _on_fps(self, btn, fps):
+        if btn.get_active(): self.fps = fps
 
     def _on_delay(self, btn, delay):
-        if btn.get_active():
-            self.delay = delay
+        if btn.get_active(): self.delay = delay
 
     def _on_mic_toggle(self, btn):
-        self.audio_mic = btn.get_active()
-        self._mic_dropdown.set_sensitive(self.audio_mic)
-        self._mic_lbl.set_label(ICON_MIC_ON if self.audio_mic else ICON_MIC_OFF)
-        if self.audio_mic:
-            btn.add_css_class("audio-toggle-active")
-        else:
-            btn.remove_css_class("audio-toggle-active")
+        self.use_mic = btn.get_active()
 
-    def _on_sink_toggle(self, btn):
-        self.audio_sink = btn.get_active()
-        self._sink_dropdown.set_sensitive(self.audio_sink)
-        self._sink_lbl.set_label(ICON_SPK_ON if self.audio_sink else ICON_SPK_OFF)
-        if self.audio_sink:
-            btn.add_css_class("audio-toggle-active")
-        else:
-            btn.remove_css_class("audio-toggle-active")
-
-    def _on_mic_selected(self, dd, _):
-        idx = dd.get_selected()
-        if 0 <= idx < len(self._sources):
-            self.mic_device = self._sources[idx]["name"]
-
-    def _on_sink_selected(self, dd, _):
-        idx = dd.get_selected()
-        if 0 <= idx < len(self._sinks):
-            # Le monitor d'un sink = son.nom + ".monitor"
-            self.sink_device = self._sinks[idx]["name"] + ".monitor"
+    def _on_spk_toggle(self, btn):
+        self.use_spk = btn.get_active()
 
     def _on_trigger(self, _btn):
         if self.delay > 0 and self.action == "record":
@@ -400,7 +264,6 @@ class ScreenshotPalette(Adw.Application):
             self._emit_and_quit()
 
     def _start_countdown(self, seconds):
-        """Affiche un compte à rebours sur le bouton déclencheur."""
         self._countdown_val = seconds
         self._trigger.set_sensitive(False)
         self._trigger_lbl.add_css_class("countdown-label")
@@ -416,18 +279,16 @@ class ScreenshotPalette(Adw.Application):
 
     def _emit_and_quit(self):
         result = {
-            "mode":        self.mode,
-            "action":      self.action,
-            "format":      self.fmt,
-            "audio_mic":   self.audio_mic,
-            "audio_sink":  self.audio_sink,
-            "mic_device":  self.mic_device,
-            "sink_device": self.sink_device,
-            "delay":       self.delay,
+            "mode":         self.mode,
+            "action":       self.action,
+            "format":       self.fmt,
+            "fps":          self.fps,
+            "audio_mic":    self.def_mic if self.use_mic else None,
+            "audio_spk":    self.def_spk if self.use_spk else None,
+            "delay":        self.delay,
         }
         print(json.dumps(result), flush=True)
         self.quit()
-
 
 if __name__ == "__main__":
     ScreenshotPalette().run(None)
